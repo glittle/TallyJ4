@@ -8,7 +8,7 @@ namespace TallyJ3.Models
 {
     public class OnlineTempBallot
     {
-        public Guid OnlineVoterGuid { get; set; }
+        public int OnlineTempBallotId { get; set; }
         public Guid ElectionGuid { get; set; }
         public string PersonGuidList { get; set; }
         public string Status { get; set; }
