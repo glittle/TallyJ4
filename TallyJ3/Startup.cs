@@ -9,8 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.SignalR;
 using TallyJ3.Data;
 using TallyJ3.Services;
+using TallyJ3.Core.Hubs;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using TallyJ3.Core.Helper;
 
 namespace TallyJ3
 {
@@ -21,7 +26,9 @@ namespace TallyJ3
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; private set; }
+
+        public static IHostingEnvironment Env { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,6 +46,8 @@ namespace TallyJ3
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
+            services.AddSignalR();
+
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
@@ -49,11 +58,14 @@ namespace TallyJ3
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Env = env;
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -65,7 +77,20 @@ namespace TallyJ3
                 app.UseExceptionHandler("/Error");
             }
 
+            
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<PublicHub>("/" + PublicHub.HubName);
+            });
+
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
+                RequestPath = "/client"
+            });
 
             app.UseAuthentication();
 
