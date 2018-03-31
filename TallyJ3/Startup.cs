@@ -29,6 +29,7 @@ namespace TallyJ3
         public static IConfiguration Configuration { get; private set; }
 
         public static IHostingEnvironment Env { get; private set; }
+        public static ServiceProvider ServiceProvider { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -38,6 +39,7 @@ namespace TallyJ3
             AddIdentity(services);
 
             services.AddSignalR();
+            AddSignalrHubs(services);
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
@@ -50,7 +52,9 @@ namespace TallyJ3
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            ServiceProvider = services.BuildServiceProvider();
         }
+
 
         private static void AddIdentity(IServiceCollection services)
         {
@@ -106,24 +110,34 @@ namespace TallyJ3
                 app.UseExceptionHandler("/Error");
             }
 
-
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<PublicHub>("/" + PublicHub.HubName);
-            });
+            UseSignalrHubs(app);
 
             app.UseStaticFiles();
+
+            // enable use of .js and .css files beside their pages
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
-                RequestPath = "/client"
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
+                RequestPath = FileLinking.RequestPath
             });
 
             app.UseAuthentication();
 
             app.UseMvc();
+        }
+
+
+        private void AddSignalrHubs(IServiceCollection services)
+        {
+            services.AddTransient<PublicHub>();
+        }
+
+        private static void UseSignalrHubs(IApplicationBuilder app)
+        {
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<PublicHubCore>("/" + PublicHub.HubName);
+            });
         }
     }
 }

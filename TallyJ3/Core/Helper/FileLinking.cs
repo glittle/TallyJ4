@@ -12,26 +12,35 @@ namespace TallyJ3.Core.Helper
 {
     public static class FileLinking
     {
+        public const string RequestPath = "/client";
+
         public static HtmlString AddAssociatedCss(IRazorPage page)
         {
+            if (page == null) {
+                return null;
+            }
             var version = GetVersion(page, ".css");
             if (version.HasNoContent())
             {
                 return null;
             }
 
-            return new HtmlString("<link rel='stylesheet' href='" + page.Path.Replace("/Pages", "/client") + ".css?v=" + version + "'>");
+            return new HtmlString("<link rel='stylesheet' href='" + page.Path.Replace("/Pages", RequestPath) + ".css?v=" + version + "'>");
         }
 
         public static HtmlString AddAssociatedJs(IRazorPage page)
         {
+            if (page == null)
+            {
+                return null;
+            }
             var version = GetVersion(page, ".js");
             if (version.HasNoContent())
             {
                 return null;
             }
 
-            return new HtmlString("<script src='" + page.Path.Replace("/Pages", "/client") + ".js?v=" + version + "'></script>");
+            return new HtmlString("<script src='" + page.Path.Replace("/Pages", RequestPath) + ".js?v=" + version + "'></script>");
         }
 
 
