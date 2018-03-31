@@ -12,10 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SignalR;
 using TallyJ3.Data;
 using TallyJ3.Services;
-using TallyJ3.Core.Hubs;
+using TallyJ3.Code.Hubs;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using TallyJ3.Core.Helper;
+using TallyJ3.Code.Helper;
 
 namespace TallyJ3
 {
@@ -38,6 +38,8 @@ namespace TallyJ3
             AddDatabase(services);
             AddIdentity(services);
 
+            services.AddMemoryCache();
+
             services.AddSignalR();
             AddSignalrHubs(services);
 
@@ -51,6 +53,9 @@ namespace TallyJ3
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
+
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
@@ -99,6 +104,8 @@ namespace TallyJ3
 
             app.UseSession();
 
+            
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -129,6 +136,7 @@ namespace TallyJ3
 
         private void AddSignalrHubs(IServiceCollection services)
         {
+            // registered here so that they can be injected into PageModels
             services.AddTransient<PublicHub>();
         }
 

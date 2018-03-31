@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TallyJ3.Data;
 
-namespace TallyJ3.Models
+namespace TallyJ3.Data.DbModel
 {
     public class OnlineTempBallot
     {

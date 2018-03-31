@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TallyJ3.Models;
+using TallyJ3.Data.DbModel;
 
 namespace TallyJ3.Data
 {
@@ -24,5 +24,7 @@ namespace TallyJ3.Data
         }
 
         public DbSet<OnlineTempBallot> OnlineTempBallots { get; set; }
+        public DbSet<Location> Location { get; set; }
+        public DbSet<Election> Election { get; set; }
     }
 }

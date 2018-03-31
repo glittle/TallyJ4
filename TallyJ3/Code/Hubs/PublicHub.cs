@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-//using TallyJ3.EF;
 
-namespace TallyJ3.Core.Hubs
+namespace TallyJ3.Code.Hubs
 {
     public class PublicHub {
         private readonly IHubContext<PublicHubCore> _coreHub;
@@ -18,14 +16,10 @@ namespace TallyJ3.Core.Hubs
         public void TellPublicAboutVisibleElections()
         {
             var list = new List<string> { "ZZ", "ZZ" };
+            //var list = new PublicElectionLister().RefreshAndGetListOfAvailableElections();
             _coreHub.Clients.Group(HubName).SendAsync("ElectionsListUpdated", list);
         }
     }
-
-    //public interface IPublicHub
-    //{
-    //    void TellPublicAboutVisibleElections();
-    //}
 
     public class PublicHubCore : Hub
     {

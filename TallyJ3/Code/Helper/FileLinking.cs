@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TallyJ3.Extensions;
 
-namespace TallyJ3.Core.Helper
+namespace TallyJ3.Code.Helper
 {
     public static class FileLinking
     {

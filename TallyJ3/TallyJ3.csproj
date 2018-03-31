@@ -4,20 +4,43 @@
         <UserSecretsId>aspnet-TallyJ3-9FB28E90-86DC-47D6-99FE-10CC24115B3E</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Remove="Core\**" />
-        <Content Remove="Core\**" />
-        <EmbeddedResource Remove="Core\**" />
-        <None Remove="Core\**" />
+        <Compile Remove="Code\**" />
+        <Compile Remove="Models\**" />
+        <Content Remove="Code\**" />
+        <Content Remove="Models\**" />
+        <EmbeddedResource Remove="Code\**" />
+        <EmbeddedResource Remove="Models\**" />
+        <None Remove="Code\**" />
+        <None Remove="Models\**" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Core\Helper\FileLinking.cs" />
-        <Compile Include="Core\Hubs\PublicHub.cs" />
+        <Compile Include="Code\Enumerations\BallotStatusEnum.cs" />
+        <Compile Include="Code\Enumerations\BaseEnumeration.cs" />
+        <Compile Include="Code\Enumerations\ElectionModeEnum.cs" />
+        <Compile Include="Code\Enumerations\ElectionTallyStatusEnum.cs" />
+        <Compile Include="Code\Enumerations\ElectionTypeEnum.cs" />
+        <Compile Include="Code\Enumerations\EnumerationExt.cs" />
+        <Compile Include="Code\Enumerations\IEnumeration.cs" />
+        <Compile Include="Code\Enumerations\IneligibleReasonEnum.cs" />
+        <Compile Include="Code\Enumerations\LocationStatusEnum.cs" />
+        <Compile Include="Code\Enumerations\VotingMethodEnum.cs" />
+        <Compile Include="Code\Helper\FileLinking.cs" />
+        <Compile Include="Code\Hubs\MainHub.cs" />
+        <Compile Include="Code\Hubs\PublicHub.cs" />
+        <Compile Include="Code\Misc\AssertAtRuntime.cs" />
+        <Compile Include="Code\Session\ItemKey.cs" />
+        <Compile Include="Code\Session\SessionKey.cs" />
+        <Compile Include="Code\Session\SiteInfo.cs" />
+        <Compile Include="Code\Session\UserSession.cs" />
+        <Compile Include="Models\ComputerModel.cs" />
+        <Compile Include="Models\DataConnectedModel.cs" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.0-preview1-final" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview1-final" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.0-preview1-final" />
         <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="2.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0-preview1-final" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Html;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+    using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using TallyJ3.Code.Session;
 
 namespace TallyJ3.Extensions
 {
@@ -429,65 +431,64 @@ namespace TallyJ3.Extensions
             return list;
         }
 
-        ///// <summary>
-        /////   Get a named object from Session.
-        ///// </summary>
-        ///// <typeparam name="T"> The type of the stored object </typeparam>
-        ///// <param name="input"> Name in Session </param>
-        ///// <param name="defaultValue"> Default value to use if nothing found </param>
-        ///// <returns> </returns>
-        //[DebuggerStepThrough]
-        //public static T FromSession<T>(this string input, T defaultValue)
-        //{
-        //    //if (UserSession.CurrentContext == null || CurrentContext.Session == null) return defaultValue;
-        //    try
-        //    {
-        //        var value = UserSession.CurrentContext.Session[input];
-        //        if (value == null || value.GetType() != typeof(T))
-        //        {
-        //            return defaultValue;
-        //        }
-        //        return (T)value;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return defaultValue;
-        //    }
-        //}
+        /// <summary>
+        ///   Get a named object from Session.
+        /// </summary>
+        /// <typeparam name="T"> The type of the stored object </typeparam>
+        /// <param name="input"> Name in Session </param>
+        /// <param name="defaultValue"> Default value to use if nothing found </param>
+        /// <returns> </returns>
+        [DebuggerStepThrough]
+        public static T FromSession<T>(this string input, T defaultValue)
+        {
+            try
+            {
+                var value = JsonConvert.DeserializeObject<T>(UserSession.CurrentContext.Session.GetString(input));
+                if (value == null || value.GetType() != typeof(T))
+                {
+                    return defaultValue;
+                }
+                return value;
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
+        }
 
-        ///// <summary>
-        /////   Get a named object from Page Items.
-        ///// </summary>
-        ///// <typeparam name="T"> The type of the stored object </typeparam>
-        ///// <param name="input"> Name in list </param>
-        ///// <param name="defaultValue"> Default value to use if nothing found </param>
-        ///// <param name="saveDefault">If yes, the Default value is stored if it is used</param>
-        ///// <returns> </returns>
-        //public static T FromPageItems<T>(this string input, T defaultValue, bool saveDefault = false)
-        //{
-        //    var value = UserSession.CurrentContext.Items[input];
-        //    if (value == null || value.GetType() != typeof(T))
-        //    {
-        //        if (saveDefault)
-        //        {
-        //            UserSession.CurrentContext.Items[input] = defaultValue;
-        //        }
-        //        return defaultValue;
-        //    }
-        //    return (T)value;
-        //}
+        /// <summary>
+        ///   Get a named object from Page Items.
+        /// </summary>
+        /// <typeparam name="T"> The type of the stored object </typeparam>
+        /// <param name="input"> Name in list </param>
+        /// <param name="defaultValue"> Default value to use if nothing found </param>
+        /// <param name="saveDefault">If yes, the Default value is stored if it is used</param>
+        /// <returns> </returns>
+        public static T FromPageItems<T>(this string input, T defaultValue, bool saveDefault = false)
+        {
+            var value = UserSession.CurrentContext.Items[input];
+            if (value == null || value.GetType() != typeof(T))
+            {
+                if (saveDefault)
+                {
+                    UserSession.CurrentContext.Items[input] = defaultValue;
+                }
+                return defaultValue;
+            }
+            return (T)value;
+        }
 
-        //public static T SetInSession<T>(this string input, T newValue)
-        //{
-        //    UserSession.CurrentContext.Session[input] = newValue;
-        //    return newValue;
-        //}
+        public static T SetInSession<T>(this string input, T newValue)
+        {
+            UserSession.CurrentContext.Session.SetString(input, JsonConvert.SerializeObject(newValue));
+            return newValue;
+        }
 
-        //public static T SetInPageItems<T>(this string input, T newValue)
-        //{
-        //    UserSession.CurrentContext.Items[input] = newValue;
-        //    return newValue;
-        //}
+        public static T SetInPageItems<T>(this string input, T newValue)
+        {
+            UserSession.CurrentContext.Items[input] = newValue;
+            return newValue;
+        }
 
 
         /// <summary>
