@@ -1,50 +1,38 @@
-using Microsoft.AspNet.SignalR;
-using System;
-using TallyJ.Code.Helpers;
-using TallyJ.Code.Session;
-using TallyJ.EF;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
+using TallyJ3.Code.Session;
 
-namespace TallyJ.CoreModels.Hubs
+namespace TallyJ3.Code.Hubs
 {
-  public class ImportHub : IStatusUpdateHub
-  {
-    private IHubContext _coreHub;
-
-    private string HubNameForPublic
+    public class ImportHub : IStatusUpdateHub
     {
-      get {
-        return "Import" + UserSession.LoginId;
-      }
+        private IHubContext<ImportHubCore> _coreHub;
+
+        public static string GroupNameForUser
+        {
+            get
+            {
+                return "Import" + UserSession.LoginId;
+            }
+        }
+
+        public void ImportInfo(int linesProcessed, int peopleAdded)
+        {
+            _coreHub.Clients.Group(GroupNameForUser).SendAsync("ImportInfo", linesProcessed, peopleAdded);
+        }
+
+        public void StatusUpdate(string msg, bool msgIsTemp = false)
+        {
+            _coreHub.Clients.Group(GroupNameForUser).SendAsync("LoaderStatus", msg, msgIsTemp);
+        }
     }
 
-    private IHubContext CoreHub
+    public class ImportHubCore : Hub
     {
-      get { return _coreHub ?? (_coreHub = GlobalHost.ConnectionManager.GetHubContext<ImportHubCore>()); }
+        public override Task OnConnectedAsync()
+        {
+            Groups.AddAsync(Context.ConnectionId, ImportHub.GroupNameForUser);
+            return base.OnConnectedAsync();
+        }
     }
-
-    /// <summary>
-    ///   Join this connection into the hub
-    /// </summary>
-    /// <param name="connectionId"></param>
-    public void Join(string connectionId)
-    {
-      CoreHub.Groups.Add(connectionId, HubNameForPublic);
-    }
-
-    public void ImportInfo(int linesProcessed, int peopleAdded)
-    {
-      CoreHub.Clients.Group(HubNameForPublic).ImportInfo(linesProcessed, peopleAdded);
-    }
-
-    public void StatusUpdate(string msg, bool msgIsTemp = false)
-    {
-      CoreHub.Clients.Group(HubNameForPublic).LoaderStatus(msg, msgIsTemp);
-    }
-  }
-
-  public class ImportHubCore : Hub
-  {
-    // empty class needed for signalR use!!
-    // referenced by helper and in JavaScript
-  }
 }

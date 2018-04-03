@@ -1,56 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNet.SignalR;
-using TallyJ.Code.Helpers;
-using TallyJ.Code.Session;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Threading.Tasks;
+using TallyJ3.Code.Misc;
+using TallyJ3.Code.Session;
 
-namespace TallyJ.CoreModels.Hubs
+namespace TallyJ3.Code.Hubs
 {
-  public class FrontDeskHub
-  {
-    private IHubContext _coreHub;
-
-    private string HubNameForCurrentElection
+    public class FrontDeskHub
     {
-      get
-      {
-        var electionGuid = UserSession.CurrentElectionGuid;
-        AssertAtRuntime.That(electionGuid != Guid.Empty);
+        private IHubContext<FrontDeskHubCore> _coreHub;
 
-        return "FrontDesk" + electionGuid;
-      }
+        public static string GroupNameForElection
+        {
+            get
+            {
+                var electionGuid = UserSession.CurrentElectionGuid;
+                AssertAtRuntime.That(electionGuid != Guid.Empty);
+
+                return "FrontDesk" + electionGuid;
+            }
+        }
+
+        public void UpdatePeople(object message)
+        {
+            _coreHub.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
+        }
     }
 
-    private IHubContext CoreHub
+    public class FrontDeskHubCore : Hub
     {
-      get { return _coreHub ?? (_coreHub = GlobalHost.ConnectionManager.GetHubContext<FrontDeskHubCore>()); }
+        public override Task OnConnectedAsync()
+        {
+            Groups.AddAsync(Context.ConnectionId, FrontDeskHub.GroupNameForElection);
+            return base.OnConnectedAsync();
+        }
     }
-
-    /// <summary>
-    /// Join this connection into the hub
-    /// </summary>
-    /// <param name="connectionId"></param>
-    public void Join(string connectionId)
-    {
-      CoreHub.Groups.Add(connectionId, HubNameForCurrentElection);
-    }
-
-    public void UpdatePeople(object message)
-    {
-      CoreHub.Clients.Group(HubNameForCurrentElection).updatePeople(message);
-    }
-
-//    public int NumAttached
-//    {
-//      get
-//      {
-//        var myHubName = GetType().Name + "Core";
-//        return !HubCounter.ConnectedIds.ContainsKey(myHubName) ? 0 : HubCounter.ConnectedIds[myHubName].Count;
-//      }
-//    }
-  }
-
-  public class FrontDeskHubCore : Hub
-  {
-  }
 }

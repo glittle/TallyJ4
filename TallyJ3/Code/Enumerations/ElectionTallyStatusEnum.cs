@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
+using TallyJ3.Data.DbModel;
 using TallyJ3.EF;
 using TallyJ3.Extensions;
 
@@ -41,15 +42,14 @@ namespace TallyJ3.Code.Enumerations
             Visible = visible;
         }
 
-        //TODO
-        //public static HtmlString ForHtmlList(Election selected, bool showAll = true)
-        //{
-        //  if (selected == null)
-        //  {
-        //    return ForHtmlList();
-        //  }
-        //  return ForHtmlList(selected.TallyStatus, showAll);
-        //}
+        public static HtmlString ForHtmlList(Election selected, bool showAll = true)
+        {
+            if (selected == null)
+            {
+                return ForHtmlList();
+            }
+            return ForHtmlList(selected.TallyStatus, showAll);
+        }
 
         public new static IList<ElectionTallyStatusEnum> Items
         {
@@ -73,10 +73,6 @@ namespace TallyJ3.Code.Enumerations
             {
                 return true;
             }
-            //if (testItem == Tallying)
-            //{
-            //  return currentState == Finalized.Value;
-            //}
             return false;
         }
 

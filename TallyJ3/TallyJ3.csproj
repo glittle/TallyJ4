@@ -19,12 +19,26 @@
         <Compile Include="Code\Enumerations\ElectionModeEnum.cs" />
         <Compile Include="Code\Enumerations\ElectionTallyStatusEnum.cs" />
         <Compile Include="Code\Enumerations\ElectionTypeEnum.cs" />
-        <Compile Include="Code\Enumerations\EnumerationExt.cs" />
         <Compile Include="Code\Enumerations\IEnumeration.cs" />
         <Compile Include="Code\Enumerations\IneligibleReasonEnum.cs" />
         <Compile Include="Code\Enumerations\LocationStatusEnum.cs" />
         <Compile Include="Code\Enumerations\VotingMethodEnum.cs" />
         <Compile Include="Code\Helper\FileLinking.cs" />
+        <Compile Include="Code\Helper\LogHelper.cs" />
+        <Compile Include="Code\Helper\MvcViewRenderer.cs" />
+        <Compile Include="Code\Helper\ResultType.cs" />
+        <Compile Include="Code\Hubs\FrontDeskHub.cs" />
+        <Compile Include="Code\Misc\SharedEnvironment.cs" />
+        <Compile Include="Code\Hubs\ImportHub.cs" />
+        <Compile Include="Code\Hubs\IStatusUpdateHub.cs" />
+        <Compile Include="Code\Hubs\RollCallHub.cs" />
+        <Compile Include="Models\BallotHelper.cs" />
+        <Compile Include="Models\ElectionAnalyzerCore.cs" />
+        <Compile Include="Models\IAnalyzerFakes.cs" />
+        <Compile Include="Models\PublicElectionLister.cs" />
+        <Compile Include="Models\Savers.cs" />
+        <Compile Include="Models\TellerHelper.cs" />
+        <Compile Include="Code\Hubs\AnalyzeHub.cs" />
         <Compile Include="Code\Hubs\MainHub.cs" />
         <Compile Include="Code\Hubs\PublicHub.cs" />
         <Compile Include="Code\Misc\AssertAtRuntime.cs" />
@@ -34,6 +48,14 @@
         <Compile Include="Code\Session\UserSession.cs" />
         <Compile Include="Models\ComputerModel.cs" />
         <Compile Include="Models\DataConnectedModel.cs" />
+        <Compile Include="Models\ElectionModel.cs" />
+        <Compile Include="Models\ElectionRules.cs" />
+        <Compile Include="Models\IElectionAnalyzer.cs" />
+        <Compile Include="Models\LocationModel.cs" />
+        <Compile Include="Models\PeopleModel.cs" />
+        <Compile Include="Models\ResultHelper.cs" />
+        <Compile Include="Models\ResultsModel.cs" />
+        <Compile Include="Models\VoteHelper.cs" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
@@ -44,6 +66,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="2.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0-preview1-final" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
+        <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
     </ItemGroup>
     <ItemGroup>
         <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />

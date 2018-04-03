@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -565,32 +566,21 @@ namespace TallyJ3.Extensions
             //}.Serialize(input);
         }
 
-        ///// <summary>
-        /////   Wrap object for returning to client as a JsonResult
-        ///// </summary>
-        ///// <param name="input"> </param>
-        ///// <param name="behavior"> Behavior to use, usually only POST is allowed. </param>
-        ///// <returns> </returns>
-        //public static JsonResult AsJsonResult(this object input,
-        //  JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
-        //{
-        //    var x = new JsonResult("tst") {
-        //    SerializerSettings = new JsonSerializerSettings {
-                
-        //    }
-        //    }
-
-        //    var jsonResult = new JsonResult
-        //    {
-        //        ContentType = "text/plain",
-                
-        //        // allow client full control over reading response (don't send as JSON type)
-        //        Data = input,
-        //        JsonRequestBehavior = behavior,
-        //        MaxJsonLength = int.MaxValue
-        //    };
-        //    return jsonResult;
-        //}
+        /// <summary>
+        ///   Wrap object for returning to client as a JsonResult
+        /// </summary>
+        /// <param name="input"> </param>
+        /// <param name="behavior"> Behavior to use, usually only POST is allowed. </param>
+        /// <returns> </returns>
+        public static JsonResult AsJsonResult(this object input)
+        {
+            var jsonResult = new JsonResult(input)
+            {
+                //?? allow client full control over reading response (don't send as JSON type)
+                //ContentType = "text/plain",
+            };
+            return jsonResult;
+        }
 
         public static TimeSpan seconds(this int input)
         {

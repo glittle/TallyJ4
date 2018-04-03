@@ -4,18 +4,16 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using TallyJ3.CoreModels;
-using TallyJ3.CoreModels.Hubs;
 using TallyJ3.EF;
 using TallyJ3;
 using TallyJ3.Data;
 using Microsoft.EntityFrameworkCore;
 using TallyJ3.Extensions;
 using TallyJ3.Data.DbModel;
-using TallyJ3.Code.Models;
 using TallyJ3.Code.Enumerations;
 using TallyJ3.Data.Caching;
 using TallyJ3.Code.Hubs;
+using TallyJ3.Models;
 
 namespace TallyJ3.Code.Session
 {
@@ -31,7 +29,8 @@ namespace TallyJ3.Code.Session
 
         public static ApplicationDbContext GetNewDbContext()
         {
-            return new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
+            return Startup.ServiceProvider.GetService<ApplicationDbContext>();
+            //return new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
         }
 
         /// <summary>
@@ -114,7 +113,11 @@ namespace TallyJ3.Code.Session
         /// <Summary>Stored as Guid in session</Summary>
         public static Guid CurrentElectionGuid
         {
-            get { return SessionKey.CurrentElectionGuid.FromSession(Guid.Empty); }
+            get {
+
+                return new Guid("863f2921-b087-4b99-8f66-972d57bd723f");
+                //return SessionKey.CurrentElectionGuid.FromSession(Guid.Empty); 
+            }
             set
             {
                 SessionKey.CurrentElectionGuid.SetInSession(value);

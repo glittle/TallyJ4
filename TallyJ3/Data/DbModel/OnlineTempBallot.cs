@@ -6,9 +6,10 @@ using TallyJ3.Data;
 
 namespace TallyJ3.Data.DbModel
 {
-    public class OnlineTempBallot
+    [Serializable]
+    public class OnlineTempBallot : IIndexedForCaching
     {
-        public int OnlineTempBallotId { get; set; }
+        public int Id { get; set; }
         public Guid ElectionGuid { get; set; }
         public string PersonGuidList { get; set; }
         public string Status { get; set; }

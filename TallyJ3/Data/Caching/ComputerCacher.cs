@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TallyJ3.Code;
 using TallyJ3.Code.Session;
-using TallyJ3.CoreModels;
-using TallyJ3.CoreModels.Hubs;
 using TallyJ3.Code.Hubs;
 using TallyJ3.Data.DbModel;
 

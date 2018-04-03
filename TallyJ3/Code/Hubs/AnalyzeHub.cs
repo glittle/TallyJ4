@@ -1,52 +1,47 @@
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using System;
-using TallyJ.Code.Helpers;
-using TallyJ.Code.Session;
-using TallyJ.EF;
+using System.Threading.Tasks;
+using TallyJ3.Code.Misc;
+using TallyJ3.Code.Session;
 
-namespace TallyJ.CoreModels.Hubs
+namespace TallyJ3.Code.Hubs
 {
-  public class AnalyzeHub : IStatusUpdateHub
-  {
-    private IHubContext _coreHub;
-
-    private string HubNameForPublic
+    public class AnalyzeHub : IAnalyzeHub, IStatusUpdateHub
     {
-      get {
-        var electionGuid = UserSession.CurrentElectionGuid;
-        AssertAtRuntime.That(electionGuid != Guid.Empty);
+        private IHubContext<AnalyzeHubCore> _coreHub;
 
-        return "Analyze" + electionGuid;
-      }
+        public AnalyzeHub(IHubContext<AnalyzeHubCore> hub)
+        {
+            _coreHub = hub;
+        }
+
+        public static string GroupNameForElection
+        {
+            get
+            {
+                var electionGuid = UserSession.CurrentElectionGuid;
+                AssertAtRuntime.That(electionGuid != Guid.Empty);
+
+                return "Analyze" + electionGuid;
+            }
+        }
+
+        public void StatusUpdate(string msg, bool msgIsTemp = false)
+        {
+            _coreHub.Clients.Group(GroupNameForElection).SendAsync("LoadStatus", msg, msgIsTemp);
+        }
     }
 
-    private IHubContext CoreHub
+    public interface IAnalyzeHub : IStatusUpdateHub
     {
-      get { return _coreHub ?? (_coreHub = GlobalHost.ConnectionManager.GetHubContext<AnalyzeHubCore>()); }
     }
 
-    /// <summary>
-    ///   Join this connection into the hub
-    /// </summary>
-    /// <param name="connectionId"></param>
-    public void Join(string connectionId)
+    public class AnalyzeHubCore : Hub
     {
-      CoreHub.Groups.Add(connectionId, HubNameForPublic);
+        public override Task OnConnectedAsync()
+        {
+            Groups.AddAsync(Context.ConnectionId, AnalyzeHub.GroupNameForElection);
+            return base.OnConnectedAsync();
+        }
     }
-
-    public void StatusUpdate(string msg, bool msgIsTemp = false)
-    {
-      CoreHub.Clients.Group(HubNameForPublic).LoadStatus(msg, msgIsTemp);
-    }
-  }
-
-  public class AnalyzeHubCore : Hub
-  {
-    // empty class needed for signalR use!!
-    // referenced by helper and in JavaScript
-  }
-
-  public interface IStatusUpdateHub {
-    void StatusUpdate(string msg, bool msgIsTemp = false);
-  }
 }

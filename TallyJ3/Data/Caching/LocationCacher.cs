@@ -4,7 +4,7 @@ using TallyJ3.Data;
 using TallyJ3.Data.Caching;
 using TallyJ3.Data.DbModel;
 
-namespace TallyJ3.EF
+namespace TallyJ3.Data.Caching
 {
   public class LocationCacher : CacherBase<Location>
   {

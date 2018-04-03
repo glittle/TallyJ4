@@ -1,48 +1,38 @@
 ﻿using System;
-using Microsoft.AspNet.SignalR;
-using TallyJ.Code.Helpers;
-using TallyJ.Code.Session;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using TallyJ3.Code.Misc;
+using TallyJ3.Code.Session;
 
-namespace TallyJ.CoreModels.Hubs
+namespace TallyJ3.Code.Hubs
 {
-  public class RollCallHub
-  {
-    private IHubContext _coreHub;
-
-    private string HubNameForCurrentElection
+    public class RollCallHub
     {
-      get
-      {
-        var electionGuid = UserSession.CurrentElectionGuid;
-        AssertAtRuntime.That(electionGuid != Guid.Empty);
+        private IHubContext<RollCallHubCore> _coreHub;
 
-        return "RollCall" + electionGuid;
-      }
+        public static string GroupNameForElection
+        {
+            get
+            {
+                var electionGuid = UserSession.CurrentElectionGuid;
+                AssertAtRuntime.That(electionGuid != Guid.Empty);
+
+                return "RollCall" + electionGuid;
+            }
+        }
+
+        public void UpdateAllConnectedClients(object message)
+        {
+            _coreHub.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
+        }
     }
 
-    private IHubContext CoreHub
+    public class RollCallHubCore : Hub
     {
-      get { return _coreHub ?? (_coreHub = GlobalHost.ConnectionManager.GetHubContext<RollCallHubCore>()); }
+        public override Task OnConnectedAsync()
+        {
+            Groups.AddAsync(Context.ConnectionId, RollCallHub.GroupNameForElection);
+            return base.OnConnectedAsync();
+        }
     }
-
-    /// <summary>
-    /// Join this connection into the hub
-    /// </summary>
-    /// <param name="connectionId"></param>
-    public void Join(string connectionId)
-    {
-      CoreHub.Groups.Add(connectionId, HubNameForCurrentElection);
-    }
-
-    public void UpdateAllConnectedClients(object message)
-    {
-      CoreHub.Clients.Group(HubNameForCurrentElection).updatePeople(message);
-    }
-  }
-
-  public class RollCallHubCore : Hub
-  {
-    // empty class needed for signalR use!!
-    // referenced by helper and in JavaScript
-  }
 }

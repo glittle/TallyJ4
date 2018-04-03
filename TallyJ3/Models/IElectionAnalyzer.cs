@@ -1,37 +1,37 @@
 using System.Collections.Generic;
-using TallyJ.CoreModels.Hubs;
-using TallyJ.EF;
+using TallyJ3.Data.DbModel;
 
-namespace TallyJ.CoreModels
+namespace TallyJ3.Models
 {
-  public interface IElectionAnalyzer
-  {
-    /// <Summary>Current Results records</Summary>
-    List<Result> Results { get; }
+    public interface IElectionAnalyzer
+    {
+        /// <Summary>Current Results records</Summary>
+        List<Result> Results { get; }
 
-    List<ResultTie> ResultTies { get; }
+        List<ResultTie> ResultTies { get; }
 
-    List<ResultSummary> ResultSummaries { get; }
+        List<ResultSummary> ResultSummaries { get; }
 
 
-    /// <Summary>Current Results records</Summary>
-    ResultSummary ResultSummaryFinal { get; }
+        /// <Summary>Current Results records</Summary>
+        ResultSummary ResultSummaryFinal { get; }
 
-    /// <Summary>Current VoteInfo records</Summary>
-    List<VoteInfo> VoteInfos { get; }
+        /// <Summary>Current VoteInfo records</Summary>
+        List<VoteInfo> VoteInfos { get; }
 
-    /// <Summary>Indicate if the results are available, or need to be generated</Summary>
-    bool IsResultAvailable { get; }
+        /// <Summary>Indicate if the results are available, or need to be generated</Summary>
+        bool IsResultAvailable { get; }
 
-    List<Ballot> Ballots { get; }
+        List<Ballot> Ballots { get; }
 
-    void AnalyzeEverything();
+        void AnalyzeEverything();
 
-    void PrepareResultSummaries();
+        void PrepareResultSummaries();
 
-    void FinalizeSummaries();
+        void FinalizeSummaries();
 
-    IStatusUpdateHub AnalyzeHub { get; }
+        //TODO
+        //IStatusUpdateHub AnalyzeHub { get; }
 
-  }
+    }
 }

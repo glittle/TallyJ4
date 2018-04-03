@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.SignalR;
-using TallyJ3.Data;
-using TallyJ3.Services;
-using TallyJ3.Code.Hubs;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using TallyJ3.Code.Helper;
+using TallyJ3.Code.Hubs;
+using TallyJ3.Code.Misc;
+using TallyJ3.Data;
+using TallyJ3.Services;
 
 namespace TallyJ3
 {
@@ -38,6 +36,12 @@ namespace TallyJ3
             AddDatabase(services);
             AddIdentity(services);
 
+            services.AddLogging(builder => builder
+                .AddConsole()
+                .AddDebug()
+                .AddConfiguration(Configuration.GetSection("Logging"))
+            );
+
             services.AddMemoryCache();
 
             services.AddSignalR();
@@ -54,6 +58,7 @@ namespace TallyJ3
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.AddSingleton<ILogHelper, LogHelper>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -78,6 +83,8 @@ namespace TallyJ3
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<ApplicationDbContext>();
         }
 
         private static void AddSession(IServiceCollection services)
@@ -102,9 +109,12 @@ namespace TallyJ3
         {
             Env = env;
 
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            //loggerFactory.AddDebug();
+
             app.UseSession();
 
-            
+
 
             if (env.IsDevelopment())
             {
@@ -137,14 +147,21 @@ namespace TallyJ3
         private void AddSignalrHubs(IServiceCollection services)
         {
             // registered here so that they can be injected into PageModels
-            services.AddTransient<PublicHub>();
+            services.AddSingleton<IPublicHub, PublicHub>();
+            services.AddSingleton<IAnalyzeHub, AnalyzeHub>();
+            //services.AddTransient<IStatusUpdateHub, IStatusUpdateHub>();
         }
 
         private static void UseSignalrHubs(IApplicationBuilder app)
         {
             app.UseSignalR(routes =>
             {
-                routes.MapHub<PublicHubCore>("/" + PublicHub.HubName);
+                routes.MapHub<PublicHubCore>("public");
+                routes.MapHub<AnalyzeHubCore>("analyze");
+                routes.MapHub<ImportHubCore>("import");
+                routes.MapHub<MainHubCore>("main");
+                routes.MapHub<FrontDeskHubCore>("frontdesk");
+                routes.MapHub<RollCallHubCore>("rollcall");
             });
         }
     }

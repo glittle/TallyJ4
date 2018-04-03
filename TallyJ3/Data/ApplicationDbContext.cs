@@ -23,8 +23,31 @@ namespace TallyJ3.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<OnlineTempBallot> OnlineTempBallots { get; set; }
-        public DbSet<Location> Location { get; set; }
+        public DbSet<Ballot> Ballot { get; set; }
+
+        // Computer is not saved
         public DbSet<Election> Election { get; set; }
+
+        public DbSet<Location> Location { get; set; }
+
+        public DbSet<JoinElectionUser> JoinElectionUser { get; set; }
+
+
+        public DbSet<OnlineTempBallot> OnlineTempBallots { get; set; }
+
+        public DbSet<Person> Person { get; set; }
+
+        public DbSet<Result> Result { get; set; }
+
+        public DbSet<ResultSummary> ResultSummary { get; set; }
+
+        public DbSet<ResultTie> ResultTie { get; set; }
+
+        public DbSet<Teller> Teller { get; set; }
+
+        public DbSet<Vote> Vote { get; set; }
+
+        public DbSet<Log> Log { get; set; }
+
     }
 }

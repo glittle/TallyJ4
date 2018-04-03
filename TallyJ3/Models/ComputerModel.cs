@@ -11,7 +11,7 @@ using TallyJ3.Code.Misc;
 using TallyJ3.EF;
 using TallyJ3.Extensions;
 
-namespace TallyJ3.Code.Models
+namespace TallyJ3.Models
 {
     public class ComputerModel : DataConnectedModel
     {
@@ -85,7 +85,7 @@ namespace TallyJ3.Code.Models
         /// <Summary>Move this computer into this location (don't change the computer code)</Summary>
         public bool MoveCurrentComputerIntoLocation(int locationId)
         {
-            var location = new LocationCacher(Db()).AllForThisElection.SingleOrDefault(l => l.Id == locationId);
+            var location = new LocationCacher(GetNewDbContext()).AllForThisElection.SingleOrDefault(l => l.Id == locationId);
 
             if (location == null)
             {
@@ -113,7 +113,7 @@ namespace TallyJ3.Code.Models
                 //  new BallotCacher(Db).AllForThisElection.Where(b => b.LocationGuid == location.LocationGuid
                 //                                                   && b.ComputerCode == computer.ComputerCode)
                 //    .OrderBy(b => b.BallotNumAtComputer)
-                //    .Select(b => b.C_RowId).FirstOrDefault();
+                //    .Select(b => b.Id).FirstOrDefault();
                 //if (ballotId != 0)
                 //{
                 //    SessionKey.CurrentBallotId.SetInSession(ballotId);

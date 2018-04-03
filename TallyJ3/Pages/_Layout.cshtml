@@ -1,6 +1,9 @@
 ﻿@using TallyJ3.Code.Helper
 @using Microsoft.AspNetCore.Mvc.Razor
-@{ 
+@using Microsoft.Extensions.DependencyInjection;
+@using Microsoft.Extensions.Options;
+@using TallyJ3.Code.Misc;
+@{
     var page = (IRazorPage)ViewData["Page"];
 }
 <!DOCTYPE html>
@@ -48,7 +51,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - TallyJ3</p>
+            <p>&copy; 2017 - TallyJ3 - Version <span class="Version" title="@Startup.Configuration["TallyJVersion:Date"]">@Startup.Configuration["TallyJVersion:Code"]</span></p>
         </footer>
     </div>
 

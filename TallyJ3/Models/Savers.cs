@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using TallyJ.Code;
-using TallyJ.EF;
+using TallyJ3.Data;
+using TallyJ3.Data.DbModel;
 
-namespace TallyJ.CoreModels
+namespace TallyJ3.Models
 {
   public class Savers : DataConnectedModel
   {
@@ -33,9 +33,9 @@ namespace TallyJ.CoreModels
     //  _isInTest = true;
     //}
 
-    public Savers(ITallyJDbContext dbContext)
+    public Savers(ApplicationDbContext dbContext)
     {
-      Db = dbContext;
+      SharedDbContext = dbContext;
     }
 
     public void PersonSaver(DbAction action, Person person)
@@ -45,9 +45,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.Person.Local.All(l => l.C_RowId != person.C_RowId))
+            if (SharedDbContext.Person.Local.All(l => l.Id != person.Id))
             {
-              Db.Person.Attach(person);
+              SharedDbContext.Person.Attach(person);
             }
           }
           break;
@@ -55,7 +55,7 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new PersonCacher(Db).UpdateItemAndSaveCache(person);
+            //new PersonCacher(SharedDbContext).UpdateItemAndSaveCache(person);
           }
           break;
 
@@ -71,9 +71,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.Vote.Local.All(l => l.C_RowId != vote.C_RowId))
+            if (SharedDbContext.Vote.Local.All(l => l.Id != vote.Id))
             {
-              Db.Vote.Attach(vote);
+              SharedDbContext.Vote.Attach(vote);
             }
           }
           break;
@@ -81,7 +81,7 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new VoteCacher(Db).UpdateItemAndSaveCache(vote);
+            //new VoteCacher(SharedDbContext).UpdateItemAndSaveCache(vote);
           }
           break;
 
@@ -97,9 +97,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.Ballot.Local.All(l => l.C_RowId != ballot.C_RowId))
+            if (SharedDbContext.Ballot.Local.All(l => l.Id != ballot.Id))
             {
-              Db.Ballot.Attach(ballot);
+              SharedDbContext.Ballot.Attach(ballot);
             }
           }
           break;
@@ -107,7 +107,7 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new BallotCacher(Db).UpdateItemAndSaveCache(ballot);
+            //new BallotCacher(SharedDbContext).UpdateItemAndSaveCache(ballot);
           }
           break;
 
@@ -123,9 +123,9 @@ namespace TallyJ.CoreModels
         case DbAction.Add:
           //if (!_isInTest)
           {
-            result.C_RowId = _tempRowId--;
-            Db.Result.Add(result);
-            //new ResultCacher(Db).UpdateItemAndSaveCache(result);
+            result.Id = _tempRowId--;
+            SharedDbContext.Result.Add(result);
+            //new ResultCacher(SharedDbContext).UpdateItemAndSaveCache(result);
           }
           //else
           //{
@@ -136,9 +136,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.Result.Local.All(r => r.C_RowId != result.C_RowId))
+            if (SharedDbContext.Result.Local.All(r => r.Id != result.Id))
             {
-              Db.Result.Attach(result);
+              SharedDbContext.Result.Attach(result);
             }
           }
           break;
@@ -146,19 +146,19 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new ResultCacher(Db).UpdateItemAndSaveCache(result);
+            //new ResultCacher(SharedDbContext).UpdateItemAndSaveCache(result);
           }
           break;
 
         case DbAction.AttachAndRemove:
           //if (!_isInTest)
           {
-            //new ResultCacher(Db).RemoveItemAndSaveCache(result);
-            if (Db.Result.Local.All(r => r.C_RowId != result.C_RowId))
+            //new ResultCacher(SharedDbContext).RemoveItemAndSaveCache(result);
+            if (SharedDbContext.Result.Local.All(r => r.Id != result.Id))
             {
-              Db.Result.Attach(result);
+              SharedDbContext.Result.Attach(result);
             }
-            Db.Result.Remove(result);
+            SharedDbContext.Result.Remove(result);
           }
           break;
 
@@ -177,9 +177,9 @@ namespace TallyJ.CoreModels
     //      }
     //      else
     //      {
-    //        resultSummary.C_RowId = tempRowId--;
-    //        Db.ResultSummary.Add(resultSummary);
-    //        new ResultSummaryCacher(Db).UpdateItemAndSaveCache(resultSummary);
+    //        resultSummary.Id = tempRowId--;
+    //        SharedDbContext.ResultSummary.Add(resultSummary);
+    //        new ResultSummaryCacher(SharedDbContext).UpdateItemAndSaveCache(resultSummary);
     //      }
     //    }
     public void ResultSummarySaver(DbAction action, ResultSummary resultSummary)
@@ -187,11 +187,11 @@ namespace TallyJ.CoreModels
       switch (action)
       {
         case DbAction.Add:
-          resultSummary.C_RowId = _tempRowId--;
+          resultSummary.Id = _tempRowId--;
           //if (!_isInTest)
           {
-            Db.ResultSummary.Add(resultSummary);
-            //new ResultSummaryCacher(Db).UpdateItemAndSaveCache(resultSummary);
+            SharedDbContext.ResultSummary.Add(resultSummary);
+            //new ResultSummaryCacher(SharedDbContext).UpdateItemAndSaveCache(resultSummary);
           }
           //else
           //{
@@ -202,9 +202,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.ResultSummary.Local.All(r => r.C_RowId != resultSummary.C_RowId))
+            if (SharedDbContext.ResultSummary.Local.All(r => r.Id != resultSummary.Id))
             {
-              Db.ResultSummary.Attach(resultSummary);
+              SharedDbContext.ResultSummary.Attach(resultSummary);
             }
           }
           break;
@@ -212,19 +212,19 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new ResultSummaryCacher(Db).UpdateItemAndSaveCache(resultSummary);
+            //new ResultSummaryCacher(SharedDbContext).UpdateItemAndSaveCache(resultSummary);
           }
           break;
 
         case DbAction.AttachAndRemove:
           //if (!_isInTest)
           {
-            //new ResultSummaryCacher(Db).RemoveItemAndSaveCache(resultSummary);
-            if (Db.ResultSummary.Local.All(r => r.C_RowId != resultSummary.C_RowId))
+            //new ResultSummaryCacher(SharedDbContext).RemoveItemAndSaveCache(resultSummary);
+            if (SharedDbContext.ResultSummary.Local.All(r => r.Id != resultSummary.Id))
             {
-              Db.ResultSummary.Attach(resultSummary);
+              SharedDbContext.ResultSummary.Attach(resultSummary);
             }
-            Db.ResultSummary.Remove(resultSummary);
+            SharedDbContext.ResultSummary.Remove(resultSummary);
           }
           break;
 
@@ -236,7 +236,7 @@ namespace TallyJ.CoreModels
     /// <Summary>Add this resultTie to the datastore</Summary>
     //protected Func<ResultTie, ResultTie> AddResultTie
     //{
-    //  get { return _addResultTie ?? Db.ResultTie.Add; }
+    //  get { return _addResultTie ?? SharedDbContext.ResultTie.Add; }
     //}
     public void ResultTieSaver(DbAction action, ResultTie resultTie)
     {
@@ -245,9 +245,9 @@ namespace TallyJ.CoreModels
         case DbAction.Add:
           //if (!_isInTest)
           {
-            resultTie.C_RowId = _tempRowId--;
-            Db.ResultTie.Add(resultTie);
-            //new ResultTieCacher(Db).UpdateItemAndSaveCache(resultTie);
+            resultTie.Id = _tempRowId--;
+            SharedDbContext.ResultTie.Add(resultTie);
+            //new ResultTieCacher(SharedDbContext).UpdateItemAndSaveCache(resultTie);
           }
           //else
           //{
@@ -258,9 +258,9 @@ namespace TallyJ.CoreModels
         case DbAction.Attach:
           //if (!_isInTest)
           {
-            if (Db.ResultTie.Local.All(r => r.C_RowId != resultTie.C_RowId))
+            if (SharedDbContext.ResultTie.Local.All(r => r.Id != resultTie.Id))
             {
-              Db.ResultTie.Attach(resultTie);
+              SharedDbContext.ResultTie.Attach(resultTie);
             }
           }
           break;
@@ -268,20 +268,20 @@ namespace TallyJ.CoreModels
         case DbAction.Save:
           //if (!_isInTest)
           {
-            //new ResultTieCacher(Db).UpdateItemAndSaveCache(resultTie);
+            //new ResultTieCacher(SharedDbContext).UpdateItemAndSaveCache(resultTie);
           }
           break;
 
         case DbAction.AttachAndRemove:
-          //if (!_isInTest && resultTie.C_RowId > 0)
-          if (resultTie.C_RowId > 0)
+          //if (!_isInTest && resultTie.Id > 0)
+          if (resultTie.Id > 0)
           {
-            //new ResultTieCacher(Db).RemoveItemAndSaveCache(resultTie);
-            if (Db.ResultTie.Local.All(r => r.C_RowId != resultTie.C_RowId))
+            //new ResultTieCacher(SharedDbContext).RemoveItemAndSaveCache(resultTie);
+            if (SharedDbContext.ResultTie.Local.All(r => r.Id != resultTie.Id))
             {
-              Db.ResultTie.Attach(resultTie);
+              SharedDbContext.ResultTie.Attach(resultTie);
             }
-            Db.ResultTie.Remove(resultTie);
+            SharedDbContext.ResultTie.Remove(resultTie);
           }
           break;
 

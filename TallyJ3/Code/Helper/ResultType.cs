@@ -1,4 +1,4 @@
-namespace TallyJ.CoreModels.Helper
+namespace TallyJ3.Code.Helper
 {
     public class ResultType
     {
