@@ -1,8 +1,8 @@
-using TallyJ.Code;
-using TallyJ.Code.Helpers;
-using TallyJ.EF;
 
-namespace TallyJ.CoreModels.Helper
+using TallyJ3.Data.DbModel;
+using TallyJ3.Extensions;
+
+namespace TallyJ3.Code.Helper
 {
   public static class PersonHelper
   {

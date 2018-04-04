@@ -30,5 +30,12 @@ namespace TallyJ3.Data.DbModel
         public Nullable<bool> HidePreBallotPages { get; set; }
         public Nullable<bool> MaskVotingMethod { get; set; }
 
+        public string BallotProcess { get; set; }
+        public string EnvNumMode { get; set; }
+        public Nullable<bool> T24 { get; set; }
+        public string ExtraFuture1 { get; set; }
+        public string ExtraFuture2 { get; set; }
+        public string ExtraFuture3 { get; set; }
+
     }
 }

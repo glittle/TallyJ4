@@ -33,10 +33,7 @@ namespace TallyJ3.Data.DbModel
         public string C_FullNameFL { get; set; }
         public string Teller1 { get; set; }
         public string Teller2 { get; set; }
-
-        internal string MakeCombinedInfo()
-        {
-            throw new NotImplementedException();
-        }
+        public string RegistrationLog { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

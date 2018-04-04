@@ -4,18 +4,18 @@
 @using TallyJ.Code.Session
 @model ResultsModel
 @{
-  ViewBag.Title = "Reports";
-  ViewBag.Message = "Report the results";
+    ViewBag.Title = "Reports";
+    ViewBag.Message = "Report the results";
 
-  ContextItems.AddJavascriptForPage("pageUrl", "reportsPage.controllerUrl={0};".FilledWith(Url.Action("Index").QuotedForJavascript()));
-  ContextItems.AddJavascriptForPage("reportsPage.electionTitle={0};".FilledWith(UserSession.CurrentElectionName.QuotedForJavascript()));
+    ContextItems.AddJavascriptForPage("pageUrl", "reportsPage.controllerUrl={0};".FilledWith(Url.Action("Index").QuotedForJavascript()));
+    ContextItems.AddJavascriptForPage("reportsPage.electionTitle={0};".FilledWith(UserSession.CurrentElectionName.QuotedForJavascript()));
 
-  var ballotProcessEnum = UserSession.CurrentElection.BallotProcess;
-  var showVoters = ballotProcessEnum != TallyJ.EF.BallotProcessEnum.None;
-  var hasLocations = ContextItems.LocationModel.HasLocations;
-  var firstHeader = false;
+    var ballotProcessEnum = UserSession.CurrentElection.BallotProcessAsEnum;
+    var showVoters = ballotProcessEnum != TallyJ.EF.BallotProcessEnum.None;
+    var hasLocations = ContextItems.LocationModel.HasLocations;
+    var firstHeader = false;
 
-  var reports = new Dictionary<string, string>
+    var reports = new Dictionary<string, string>
   {
   { "SimpleResults|Ballot Reports", "Main Election Report"},
   { "VotesByNum", "Tellers' Report, by Votes"},

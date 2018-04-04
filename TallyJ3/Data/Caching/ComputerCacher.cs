@@ -7,6 +7,7 @@ using TallyJ3.Code;
 using TallyJ3.Code.Session;
 using TallyJ3.Code.Hubs;
 using TallyJ3.Data.DbModel;
+using TallyJ3.Code.Misc;
 
 namespace TallyJ3.Data.Caching
 {
@@ -75,7 +76,7 @@ namespace TallyJ3.Data.Caching
       if (wasRemoved)
       {
         //new ElectionModel().UpdateElectionWhenComputerFreshnessChanges(AllForThisElection);
-        Startup.ServiceProvider.GetService<PublicHub>().TellPublicAboutVisibleElections();
+        SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
       }
     }
 

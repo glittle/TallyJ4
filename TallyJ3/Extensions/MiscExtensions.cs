@@ -130,7 +130,7 @@ namespace TallyJ3.Extensions
         /// <Summary>Returns true if this bool? is true</Summary>
         public static bool AsBoolean(this bool? input, bool? defaultValue = null)
         {
-            return input.HasValue ? input.Value : defaultValue.HasValue && defaultValue.Value;
+            return input.HasValue ? input.Value : (defaultValue.HasValue && defaultValue.Value);
         }
 
         /// <Summary>Returns a true bool?, or null if false</Summary>

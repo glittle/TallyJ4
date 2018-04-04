@@ -14,10 +14,11 @@ using TallyJ3.Code.Enumerations;
 using TallyJ3.Data.Caching;
 using TallyJ3.Code.Hubs;
 using TallyJ3.Models;
+using TallyJ3.Code.Misc;
 
 namespace TallyJ3.Code.Session
 {
-    public static class UserSession
+    public static class UserSession 
     {
         public static HttpContext CurrentContext
         {
@@ -470,7 +471,7 @@ namespace TallyJ3.Code.Session
                 }
                 else
                 {
-                    Startup.ServiceProvider.GetService<PublicHub>().TellPublicAboutVisibleElections();
+                    SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
 
                     //new PublicHub().TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
                 }

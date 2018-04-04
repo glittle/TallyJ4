@@ -424,7 +424,7 @@ namespace TallyJ3.Models
 
             dbContext.SaveChanges();
 
-            SharedEnvironment.AnalyzeHub.StatusUpdate("Starting Analysis from " + UserSession.CurrentComputerCode);
+            SharedEnvironment.Current.AnalyzeHub.StatusUpdate("Starting Analysis from " + UserSession.CurrentComputerCode);
 
             resultSummaryCacher.UpdateItemAndSaveCache(resultSummary);
 

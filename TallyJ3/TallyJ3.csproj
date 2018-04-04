@@ -26,6 +26,7 @@
         <Compile Include="Code\Helper\FileLinking.cs" />
         <Compile Include="Code\Helper\LogHelper.cs" />
         <Compile Include="Code\Helper\MvcViewRenderer.cs" />
+        <Compile Include="Code\Helper\PersonHelper.cs" />
         <Compile Include="Code\Helper\ResultType.cs" />
         <Compile Include="Code\Hubs\FrontDeskHub.cs" />
         <Compile Include="Code\Misc\SharedEnvironment.cs" />

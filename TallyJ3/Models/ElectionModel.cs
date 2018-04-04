@@ -274,8 +274,8 @@ namespace TallyJ3.Models
                 election.UseCallInButton,
                 election.HidePreBallotPages,
                 election.MaskVotingMethod,
-                election.BallotProcessRaw,
-                election.EnvNumModeRaw,
+                election.BallotProcess,
+                election.EnvNumMode,
                 election.T24,
             }.GetAllPropertyInfos().Select(pi => pi.Name).ToArray();
 
@@ -293,7 +293,7 @@ namespace TallyJ3.Models
 
                 electionCacher.UpdateItemAndSaveCache(election);
 
-                SharedEnvironment.PublicHub.TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
+                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
             }
 
             if (currentMode != election.ElectionMode
@@ -362,7 +362,7 @@ namespace TallyJ3.Models
             {
                 message = "Teller (" + UserSession.MemberName + ") switched into Election";
 
-                SharedEnvironment.PublicHub.TellPublicAboutVisibleElections();
+                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
 
                 UpgradeOldData();
             }
@@ -601,7 +601,7 @@ namespace TallyJ3.Models
                 //        };
                 //        UserSession.IsKnownTeller = currentIsKnown;
 
-                SharedEnvironment.MainHub.StatusChanged(info, info);
+                SharedEnvironment.Current.MainHub.StatusChanged(info, info);
             }
         }
 
@@ -714,7 +714,7 @@ namespace TallyJ3.Models
 
                 electionCacher.UpdateItemAndSaveCache(election);
 
-                SharedEnvironment.PublicHub.TellPublicAboutVisibleElections();
+                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
 
                 return new { Saved = true }.AsJsonResult();
             }
@@ -749,7 +749,7 @@ namespace TallyJ3.Models
 
                 Db.SaveChanges();
 
-                SharedEnvironment.MainHub.CloseOutGuestTellers();
+                SharedEnvironment.Current.MainHub.CloseOutGuestTellers();
 
                 new BallotCacher().DropThisCache();
                 //new ComputerCacher().DropThisCache();
@@ -763,7 +763,7 @@ namespace TallyJ3.Models
                 new VoteCacher().DropThisCache();
             }
 
-            SharedEnvironment.PublicHub.TellPublicAboutVisibleElections();
+            SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
         }
 
         //    public bool ProcessPulse()

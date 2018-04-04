@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using TallyJ3.Code.Enumerations;
+using TallyJ3.Code.Helper;
 using TallyJ3.Code.Hubs;
 using TallyJ3.Code.Session;
 using TallyJ3.Data.Caching;
@@ -486,15 +487,15 @@ namespace TallyJ3.Models
                   EnvNum = ShowEnvNum(p),
                   p.CanVote,
                   p.CanReceiveVotes, // for ballot entry page
-            p.IneligibleReasonGuid, // for ballot entry page
-            p.BahaiId
+                  p.IneligibleReasonGuid, // for ballot entry page
+                  p.BahaiId
               });
         }
 
         private string FormatRegistrationLog(Person p)
         {
-            return p.RegistrationLog.Count > 1
-              ? p.RegistrationLog.JoinedAsString("\n").SurroundContentWith("<span class=Log title=\"", "\"></span>")
+            return p.RegistrationLogAsList.Count > 1
+              ? p.RegistrationLogAsList.JoinedAsString("\n").SurroundContentWith("<span class=Log title=\"", "\"></span>")
               : "";
         }
 
@@ -520,7 +521,7 @@ namespace TallyJ3.Models
 
         private static string ShowRegistrationTime(int timeOffset, Person p)
         {
-            var format = UserSession.CurrentElection.T24 ? "HH:mm" : "h:mm tt";
+            var format = UserSession.CurrentElection.T24.AsBoolean() ? "HH:mm" : "h:mm tt";
             return p.RegistrationTime.HasValue
               ? p.RegistrationTime.Value.AddMilliseconds(0 - timeOffset).ToString(format).ToLowerInvariant()
               : "";
@@ -575,14 +576,14 @@ namespace TallyJ3.Models
                 person.RegistrationTime = DateTime.Now;
                 votingMethodRemoved = true;
 
-                var log = person.RegistrationLog;
+                var log = person.RegistrationLogAsList;
                 log.Add(new[] {
-          ShowRegistrationTime(timeOffset, person),
-          "De-selected",
-          ShowTellers(person),
-          LocationName(UserSession.CurrentLocationGuid),
-        }.JoinedAsString("; ", true));
-                person.RegistrationLog = log;
+                            ShowRegistrationTime(timeOffset, person),
+                            "De-selected",
+                            ShowTellers(person),
+                            LocationName(UserSession.CurrentLocationGuid),
+                        }.JoinedAsString("; ", true));
+                person.RegistrationLogAsList = log;
             }
             else
             {
@@ -595,14 +596,14 @@ namespace TallyJ3.Models
 
                 newVoteLocationGuid = person.VotingLocationGuid;
 
-                var log = person.RegistrationLog;
+                var log = person.RegistrationLogAsList;
                 log.Add(new[] {
           ShowRegistrationTime(timeOffset, person),
           VotingMethodEnum.TextFor(person.VotingMethod),
           ShowTellers(person),
           LocationName(person.VotingLocationGuid),
         }.JoinedAsString("; ", true));
-                person.RegistrationLog = log;
+                person.RegistrationLogAsList = log;
 
                 // make number for every method except Registered
                 var needEnvNum = person.EnvNum == null && voteType != VotingMethodEnum.Registered;

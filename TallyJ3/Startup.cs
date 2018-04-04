@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Sockets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,8 @@ namespace TallyJ3
 {
     public class Startup
     {
+        private static IHubContext<PublicHubCore> _publicHub;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,25 +32,27 @@ namespace TallyJ3
         public static IConfiguration Configuration { get; private set; }
 
         public static IHostingEnvironment Env { get; private set; }
-        public static ServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider ServiceProvider { get; private set; }
+        public static IHubContext<PublicHubCore> GlobalPublicHub
+        {
+            get
+            {
+                return _publicHub ?? (_publicHub = ServiceProvider.GetService<IHubContext<PublicHubCore>>());
+            }
+        }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+
+        // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AddLogging(services);
             AddSession(services);
             AddDatabase(services);
             AddIdentity(services);
-
-            services.AddLogging(builder => builder
-                .AddConsole()
-                .AddDebug()
-                .AddConfiguration(Configuration.GetSection("Logging"))
-            );
+            AddSignalrHubs(services);
 
             services.AddMemoryCache();
-
-            services.AddSignalR();
-            AddSignalrHubs(services);
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
@@ -58,12 +65,66 @@ namespace TallyJ3
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
 
+
             services.AddSingleton<ILogHelper, LogHelper>();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddSingleton<ISharedEnvironment, SharedEnvironment>();
 
-            ServiceProvider = services.BuildServiceProvider();
+            //ServiceProvider = services.BuildServiceProvider();
+
+            services.AddSingleton<IPublicHubHelper, PublicHubHelper>();
         }
+
+
+        // Configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+            ILoggerFactory logger, IConfiguration configuration, IServiceProvider serviceProvider)
+        {
+            Env = env;
+            ServiceProvider = serviceProvider;
+
+            app.UseSession();
+
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
+            UseSignalrHubs(app);
+
+            app.UseStaticFiles();
+
+            // enable use of .js and .css files beside their pages
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
+                RequestPath = FileLinking.RequestPath
+            });
+
+            app.UseAuthentication();
+
+            app.UseMvc();
+        }
+
+
+        private static void AddLogging(IServiceCollection services)
+        {
+            services.AddLogging(builder => builder
+                            .AddConsole()
+                            .AddDebug()
+                            .AddConfiguration(Configuration.GetSection("Logging"))
+                        );
+        }
+
+
+
 
 
         private static void AddIdentity(IServiceCollection services)
@@ -104,51 +165,16 @@ namespace TallyJ3
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            Env = env;
-
-            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
-
-            app.UseSession();
-
-
-
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
-            UseSignalrHubs(app);
-
-            app.UseStaticFiles();
-
-            // enable use of .js and .css files beside their pages
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
-                RequestPath = FileLinking.RequestPath
-            });
-
-            app.UseAuthentication();
-
-            app.UseMvc();
-        }
 
 
         private void AddSignalrHubs(IServiceCollection services)
         {
+            services.AddSignalR();
+
             // registered here so that they can be injected into PageModels
-            services.AddSingleton<IPublicHub, PublicHub>();
-            services.AddSingleton<IAnalyzeHub, AnalyzeHub>();
+            services.AddSingleton<PublicHubCore>();
+            //services.AddSingleton<IAnalyzeHub, AnalyzeHub>();
+            //services.AddSingleton<IMainHub, MainHub>();
             //services.AddTransient<IStatusUpdateHub, IStatusUpdateHub>();
         }
 
@@ -156,12 +182,12 @@ namespace TallyJ3
         {
             app.UseSignalR(routes =>
             {
-                routes.MapHub<PublicHubCore>("public");
-                routes.MapHub<AnalyzeHubCore>("analyze");
-                routes.MapHub<ImportHubCore>("import");
-                routes.MapHub<MainHubCore>("main");
-                routes.MapHub<FrontDeskHubCore>("frontdesk");
-                routes.MapHub<RollCallHubCore>("rollcall");
+                routes.MapHub<PublicHubCore>("/public");
+                //routes.MapHub<AnalyzeHubCore>("/analyze");
+                //routes.MapHub<ImportHubCore>("/import");
+                //routes.MapHub<MainHubCore>("/main");
+                //routes.MapHub<FrontDeskHubCore>("/frontdesk");
+                //routes.MapHub<RollCallHubCore>("/rollcall");
             });
         }
     }
