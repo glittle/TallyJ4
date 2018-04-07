@@ -1,37 +1,44 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
-using TallyJ3.Code.Misc;
 using TallyJ3.Code.Session;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class FrontDeskHub
+    public interface IFrontDeskHubHelper
     {
-        private IHubContext<FrontDeskHubCore> _coreHub;
+        void UpdatePeople(object message);
+    }
+
+    public class FrontDeskHubHelper : IFrontDeskHubHelper
+    {
+
+        private IHubContext<FrontDeskHub> HubContext { get; }
+
+        public FrontDeskHubHelper(IHubContext<FrontDeskHub> hubContext)
+        {
+            HubContext = hubContext;
+        }
+
 
         public static string GroupNameForElection
         {
             get
             {
-                var electionGuid = UserSession.CurrentElectionGuid;
-                AssertAtRuntime.That(electionGuid != Guid.Empty);
-
-                return "FrontDesk" + electionGuid;
+                return UserSession.CurrentElectionGuid.ToString();
             }
         }
 
         public void UpdatePeople(object message)
         {
-            _coreHub.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
+            HubContext.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
         }
     }
 
-    public class FrontDeskHubCore : Hub
+    public class FrontDeskHub : Hub
     {
         public override Task OnConnectedAsync()
         {
-            Groups.AddAsync(Context.ConnectionId, FrontDeskHub.GroupNameForElection);
+            Groups.AddAsync(Context.ConnectionId, FrontDeskHubHelper.GroupNameForElection);
             return base.OnConnectedAsync();
         }
     }

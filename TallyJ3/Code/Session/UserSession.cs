@@ -471,7 +471,7 @@ namespace TallyJ3.Code.Session
                 }
                 else
                 {
-                    SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
+                    Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections();
 
                     //new PublicHub().TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
                 }

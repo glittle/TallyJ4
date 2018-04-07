@@ -4,34 +4,45 @@ using TallyJ3.Code.Session;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class ImportHub : IStatusUpdateHub
+    public interface IImportHubHelper
     {
-        private IHubContext<ImportHubCore> _coreHub;
+        void ImportInfo(int linesProcessed, int peopleAdded);
+        void StatusUpdate(string msg, bool msgIsTemp = false);
+    }
+
+    public class ImportHubHelper : IStatusUpdateHub, IImportHubHelper
+    {
+        public ImportHubHelper(IHubContext<ImportHub> hubContext)
+        {
+            HubContext = hubContext;
+        }
 
         public static string GroupNameForUser
         {
             get
             {
-                return "Import" + UserSession.LoginId;
+                return UserSession.LoginId;
             }
         }
 
+        public IHubContext<ImportHub> HubContext { get; }
+
         public void ImportInfo(int linesProcessed, int peopleAdded)
         {
-            _coreHub.Clients.Group(GroupNameForUser).SendAsync("ImportInfo", linesProcessed, peopleAdded);
+            HubContext.Clients.Group(GroupNameForUser).SendAsync("ImportInfo", linesProcessed, peopleAdded);
         }
 
         public void StatusUpdate(string msg, bool msgIsTemp = false)
         {
-            _coreHub.Clients.Group(GroupNameForUser).SendAsync("LoaderStatus", msg, msgIsTemp);
+            HubContext.Clients.Group(GroupNameForUser).SendAsync("LoaderStatus", msg, msgIsTemp);
         }
     }
 
-    public class ImportHubCore : Hub
+    public class ImportHub : Hub
     {
         public override Task OnConnectedAsync()
         {
-            Groups.AddAsync(Context.ConnectionId, ImportHub.GroupNameForUser);
+            Groups.AddAsync(Context.ConnectionId, ImportHubHelper.GroupNameForUser);
             return base.OnConnectedAsync();
         }
     }

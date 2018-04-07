@@ -712,7 +712,7 @@ namespace TallyJ3.Models
                 PersonLines = FrontDeskPersonLines(new List<Person> { person }),
                 LastRowVersion = person.C_RowVersionInt
             };
-            new FrontDeskHub().UpdatePeople(updateInfo);
+            Startup.GetService<FrontDeskHubHelper>().UpdatePeople(updateInfo);
 
 
             var oldestStamp = person.C_RowVersionInt.AsLong() - 5; // send last 5, to ensure none are missed

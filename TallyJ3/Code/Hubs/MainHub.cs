@@ -1,60 +1,52 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
-using TallyJ3.Code.Misc;
 using TallyJ3.Code.Session;
 using TallyJ3.Models;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class MainHub : IMainHub
+    public interface IMainHubHelper
     {
-        private IHubContext<MainHubCore> _coreHub;
+        void StatusChanged(object infoForKnown, object infoForGuest);
+        void CloseOutGuestTellers();
+    }
 
-        public MainHub(IHubContext<MainHubCore> hub)
+    public class MainHubHelper : IMainHubHelper
+    {
+        public IHubContext<MainHub> HubContext { get; }
+
+        public MainHubHelper(IHubContext<MainHub> hubContext)
         {
-            _coreHub = hub;
+            HubContext = hubContext;
         }
 
         public static string GroupNameForElection
         {
             get
             {
-                var electionGuid = UserSession.CurrentElectionGuid;
-                AssertAtRuntime.That(electionGuid != Guid.Empty);
-
-                return "Main" + electionGuid;
+                return UserSession.CurrentElectionGuid.ToString();
             }
         }
 
         public void StatusChanged(object infoForKnown, object infoForGuest)
         {
-            _coreHub.Clients.Group(GroupNameForElection + "Known").SendAsync("statusChanged", infoForKnown);
-            _coreHub.Clients.Group(GroupNameForElection + "Guest").SendAsync("statusChanged", infoForGuest);
+            HubContext.Clients.Group(GroupNameForElection + "Known").SendAsync("statusChanged", infoForKnown);
+            HubContext.Clients.Group(GroupNameForElection + "Guest").SendAsync("statusChanged", infoForGuest);
         }
 
         public void CloseOutGuestTellers()
         {
-            _coreHub.Clients.Group(GroupNameForElection + "Guest").SendAsync("electionClosed");
+            HubContext.Clients.Group(GroupNameForElection + "Guest").SendAsync("electionClosed");
         }
     }
-
-    public interface IMainHub
-    {
-        void StatusChanged(object infoForKnown, object infoForGuest);
-        void CloseOutGuestTellers();
-    }
-
-    public class MainHubCore : Hub
+    
+    public class MainHub : Hub
     {
         public override Task OnConnectedAsync()
         {
-            var group = MainHub.GroupNameForElection + (UserSession.IsKnownTeller ? "Known" : "Guest");
-
-            Groups.AddAsync(Context.ConnectionId, MainHub.GroupNameForElection);
-
+            var group = MainHubHelper.GroupNameForElection + (UserSession.IsKnownTeller ? "Known" : "Guest");
+            Groups.AddAsync(Context.ConnectionId, group);
             new ComputerModel().RefreshLastContact();
-
             return base.OnConnectedAsync();
         }
     }

@@ -76,7 +76,7 @@ namespace TallyJ3.Data.Caching
       if (wasRemoved)
       {
         //new ElectionModel().UpdateElectionWhenComputerFreshnessChanges(AllForThisElection);
-        SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
+        Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections();
       }
     }
 

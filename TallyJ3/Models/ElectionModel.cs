@@ -293,7 +293,7 @@ namespace TallyJ3.Models
 
                 electionCacher.UpdateItemAndSaveCache(election);
 
-                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
+                Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections(); // in case the name, or ListForPublic, etc. has changed
             }
 
             if (currentMode != election.ElectionMode
@@ -362,7 +362,7 @@ namespace TallyJ3.Models
             {
                 message = "Teller (" + UserSession.MemberName + ") switched into Election";
 
-                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
+                Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections();
 
                 UpgradeOldData();
             }
@@ -601,7 +601,7 @@ namespace TallyJ3.Models
                 //        };
                 //        UserSession.IsKnownTeller = currentIsKnown;
 
-                SharedEnvironment.Current.MainHub.StatusChanged(info, info);
+                Startup.GetService<IMainHubHelper>().StatusChanged(info, info);
             }
         }
 
@@ -714,7 +714,7 @@ namespace TallyJ3.Models
 
                 electionCacher.UpdateItemAndSaveCache(election);
 
-                SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
+                Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections();
 
                 return new { Saved = true }.AsJsonResult();
             }
@@ -749,7 +749,7 @@ namespace TallyJ3.Models
 
                 Db.SaveChanges();
 
-                SharedEnvironment.Current.MainHub.CloseOutGuestTellers();
+                Startup.GetService<IMainHubHelper>().CloseOutGuestTellers();
 
                 new BallotCacher().DropThisCache();
                 //new ComputerCacher().DropThisCache();
@@ -763,7 +763,7 @@ namespace TallyJ3.Models
                 new VoteCacher().DropThisCache();
             }
 
-            SharedEnvironment.Current.PublicHubHelper.TellPublicAboutVisibleElections();
+            Startup.GetService<IPublicHubHelper>().TellPublicAboutVisibleElections();
         }
 
         //    public bool ProcessPulse()

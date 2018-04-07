@@ -22,7 +22,7 @@ namespace TallyJ3
 {
     public class Startup
     {
-        private static IHubContext<PublicHubCore> _publicHub;
+        private static IHubContext<PublicHub> _publicHub;
 
         public Startup(IConfiguration configuration)
         {
@@ -33,15 +33,11 @@ namespace TallyJ3
 
         public static IHostingEnvironment Env { get; private set; }
         public static IServiceProvider ServiceProvider { get; private set; }
-        public static IHubContext<PublicHubCore> GlobalPublicHub
+
+        public static T GetService<T>()
         {
-            get
-            {
-                return _publicHub ?? (_publicHub = ServiceProvider.GetService<IHubContext<PublicHubCore>>());
-            }
+            return ServiceProvider.GetRequiredService<T>();
         }
-
-
 
         // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -68,17 +64,14 @@ namespace TallyJ3
 
             services.AddSingleton<ILogHelper, LogHelper>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
-            services.AddSingleton<ISharedEnvironment, SharedEnvironment>();
 
             //ServiceProvider = services.BuildServiceProvider();
 
-            services.AddSingleton<IPublicHubHelper, PublicHubHelper>();
         }
 
 
         // Configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory logger, IConfiguration configuration, IServiceProvider serviceProvider)
         {
             Env = env;
@@ -88,7 +81,7 @@ namespace TallyJ3
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -171,24 +164,26 @@ namespace TallyJ3
         {
             services.AddSignalR();
 
-            // registered here so that they can be injected into PageModels
-            services.AddSingleton<PublicHubCore>();
-            //services.AddSingleton<IAnalyzeHub, AnalyzeHub>();
-            //services.AddSingleton<IMainHub, MainHub>();
-            //services.AddTransient<IStatusUpdateHub, IStatusUpdateHub>();
+            services.AddSingleton<IAnalyzeHubHelper, AnalyzeHubHelper>();
+            services.AddSingleton<IFrontDeskHubHelper, FrontDeskHubHelper>();
+            services.AddSingleton<IImportHubHelper, ImportHubHelper>();
+            services.AddSingleton<IMainHubHelper, MainHubHelper>();
+            services.AddSingleton<IPublicHubHelper, PublicHubHelper>();
+            services.AddSingleton<IRollCallHubHelper, RollCallHubHelper>();
         }
 
         private static void UseSignalrHubs(IApplicationBuilder app)
         {
             app.UseSignalR(routes =>
             {
-                routes.MapHub<PublicHubCore>("/public");
-                //routes.MapHub<AnalyzeHubCore>("/analyze");
-                //routes.MapHub<ImportHubCore>("/import");
-                //routes.MapHub<MainHubCore>("/main");
-                //routes.MapHub<FrontDeskHubCore>("/frontdesk");
-                //routes.MapHub<RollCallHubCore>("/rollcall");
+                routes.MapHub<AnalyzeHubCore>("/analyze");
+                routes.MapHub<FrontDeskHub>("/frontdesk");
+                routes.MapHub<ImportHub>("/import");
+                routes.MapHub<MainHub>("/main");
+                routes.MapHub<PublicHub>("/public");
+                routes.MapHub<RollCallHub>("/rollcall");
             });
+
         }
     }
 }

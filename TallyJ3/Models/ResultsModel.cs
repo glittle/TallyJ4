@@ -5,6 +5,7 @@ using System.Linq;
 using TallyJ3.Code.Enumerations;
 using TallyJ3.Code.Helper;
 using TallyJ3.Code.Helpers;
+using TallyJ3.Code.Hubs;
 using TallyJ3.Code.Misc;
 using TallyJ3.Code.Session;
 using TallyJ3.Data.Caching;
@@ -424,7 +425,7 @@ namespace TallyJ3.Models
 
             dbContext.SaveChanges();
 
-            SharedEnvironment.Current.AnalyzeHub.StatusUpdate("Starting Analysis from " + UserSession.CurrentComputerCode);
+            Startup.GetService<IAnalyzeHubHelper>().StatusUpdate("Starting Analysis from " + UserSession.CurrentComputerCode);
 
             resultSummaryCacher.UpdateItemAndSaveCache(resultSummary);
 

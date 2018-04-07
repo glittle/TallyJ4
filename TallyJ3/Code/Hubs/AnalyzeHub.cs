@@ -1,38 +1,33 @@
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
-using TallyJ3.Code.Misc;
 using TallyJ3.Code.Session;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class AnalyzeHub : IAnalyzeHub, IStatusUpdateHub
+    public class AnalyzeHubHelper : IAnalyzeHubHelper, IStatusUpdateHub
     {
-        private IHubContext<AnalyzeHubCore> _coreHub;
+        public IHubContext<AnalyzeHubCore> HubContext { get; }
 
-        public AnalyzeHub(IHubContext<AnalyzeHubCore> hub)
+        public AnalyzeHubHelper(IHubContext<AnalyzeHubCore> hubContext)
         {
-            _coreHub = hub;
+            HubContext = hubContext;
         }
 
         public static string GroupNameForElection
         {
             get
             {
-                var electionGuid = UserSession.CurrentElectionGuid;
-                AssertAtRuntime.That(electionGuid != Guid.Empty);
-
-                return "Analyze" + electionGuid;
+                return UserSession.CurrentElectionGuid.ToString();
             }
         }
 
         public void StatusUpdate(string msg, bool msgIsTemp = false)
         {
-            _coreHub.Clients.Group(GroupNameForElection).SendAsync("LoadStatus", msg, msgIsTemp);
+            HubContext.Clients.Group(GroupNameForElection).SendAsync("LoadStatus", msg, msgIsTemp);
         }
     }
 
-    public interface IAnalyzeHub : IStatusUpdateHub
+    public interface IAnalyzeHubHelper : IStatusUpdateHub
     {
     }
 
@@ -40,7 +35,7 @@ namespace TallyJ3.Code.Hubs
     {
         public override Task OnConnectedAsync()
         {
-            Groups.AddAsync(Context.ConnectionId, AnalyzeHub.GroupNameForElection);
+            Groups.AddAsync(Context.ConnectionId, AnalyzeHubHelper.GroupNameForElection);
             return base.OnConnectedAsync();
         }
     }

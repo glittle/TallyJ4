@@ -1,37 +1,43 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
-using TallyJ3.Code.Misc;
 using TallyJ3.Code.Session;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class RollCallHub
+    public interface IRollCallHubHelper
     {
-        private IHubContext<RollCallHubCore> _coreHub;
+        void UpdateAllConnectedClients(object message);
+    }
+
+    public class RollCallHubHelper : IRollCallHubHelper
+    {
+
+        public RollCallHubHelper(IHubContext<RollCallHub> hubContext)
+        {
+            HubContext = hubContext;
+        }
 
         public static string GroupNameForElection
         {
             get
             {
-                var electionGuid = UserSession.CurrentElectionGuid;
-                AssertAtRuntime.That(electionGuid != Guid.Empty);
-
-                return "RollCall" + electionGuid;
+                return UserSession.CurrentElectionGuid.ToString();
             }
         }
 
+        public IHubContext<RollCallHub> HubContext { get; }
+
         public void UpdateAllConnectedClients(object message)
         {
-            _coreHub.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
+            HubContext.Clients.Group(GroupNameForElection).SendAsync("updatePeople", message);
         }
     }
 
-    public class RollCallHubCore : Hub
+    public class RollCallHub : Hub
     {
         public override Task OnConnectedAsync()
         {
-            Groups.AddAsync(Context.ConnectionId, RollCallHub.GroupNameForElection);
+            Groups.AddAsync(Context.ConnectionId, RollCallHubHelper.GroupNameForElection);
             return base.OnConnectedAsync();
         }
     }

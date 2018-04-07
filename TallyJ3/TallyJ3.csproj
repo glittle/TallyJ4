@@ -29,7 +29,6 @@
         <Compile Include="Code\Helper\PersonHelper.cs" />
         <Compile Include="Code\Helper\ResultType.cs" />
         <Compile Include="Code\Hubs\FrontDeskHub.cs" />
-        <Compile Include="Code\Misc\SharedEnvironment.cs" />
         <Compile Include="Code\Hubs\ImportHub.cs" />
         <Compile Include="Code\Hubs\IStatusUpdateHub.cs" />
         <Compile Include="Code\Hubs\RollCallHub.cs" />

@@ -53,13 +53,13 @@ namespace TallyJ3.Models
         protected ElectionAnalyzerCore()
         {
             _election = UserSession.CurrentElection;
-            _hub = Startup.ServiceProvider.GetService<IAnalyzeHub>();
+            _hub = Startup.ServiceProvider.GetService<IAnalyzeHubHelper>();
             Savers = new Savers(SharedDbContext);
         }
         protected ElectionAnalyzerCore(Election election, IStatusUpdateHub hub = null)
         {
             _election = election;
-            _hub = hub ?? Startup.ServiceProvider.GetService<IAnalyzeHub>();
+            _hub = hub ?? Startup.ServiceProvider.GetService<IAnalyzeHubHelper>();
             Savers = new Savers(SharedDbContext);
         }
 

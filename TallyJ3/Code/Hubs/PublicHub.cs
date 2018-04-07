@@ -1,34 +1,34 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TallyJ3.Code.Misc;
 
 namespace TallyJ3.Code.Hubs
 {
-    public class PublicHubHelper : IPublicHubHelper
-    {
-        private readonly IHubContext<PublicHubCore> _coreHub;
-
-        public PublicHubHelper(IHubContext<PublicHubCore> publicHubContext) 
-        {
-            _coreHub = publicHubContext;
-        }
-
-        public void TellPublicAboutVisibleElections(string msg = null)
-        {
-            //var list = new PublicElectionLister().RefreshAndGetListOfAvailableElections();
-            var list = new List<string> { "ZZ", "inside helper", msg };
-            _coreHub.Clients.All.SendAsync("ElectionsListUpdated", list);
-        }
-    }
-
     public interface IPublicHubHelper
     {
         void TellPublicAboutVisibleElections(string msg = null);
     }
 
-    public class PublicHubCore : Hub
+
+    public class PublicHubHelper : IPublicHubHelper
+    {
+        public IHubContext<PublicHub> HubContext { get; }
+
+        public PublicHubHelper(IHubContext<PublicHub> hubContext) 
+        {
+            HubContext = hubContext;
+        }
+
+
+        public void TellPublicAboutVisibleElections(string msg = null)
+        {
+            //var list = new PublicElectionLister().RefreshAndGetListOfAvailableElections();
+            var list = new List<string> { "ZZ", "inside helper", msg };
+            HubContext.Clients.All.SendAsync("ElectionsListUpdated", list);
+        }
+    }
+
+    public class PublicHub : Hub
     {
         public override Task OnConnectedAsync()
         {
