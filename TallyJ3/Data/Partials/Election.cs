@@ -64,7 +64,7 @@ namespace TallyJ3.Data.DbModel
             get
             {
                 var bp = BallotProcess;
-                if (Enum.IsDefined(typeof(BallotProcessEnum), bp))
+                if (bp != null && Enum.IsDefined(typeof(BallotProcessEnum), bp))
                 {
                     return (BallotProcessEnum)Enum.Parse(typeof(BallotProcessEnum), bp);
                 }

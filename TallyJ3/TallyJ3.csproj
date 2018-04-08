@@ -32,6 +32,7 @@
         <Compile Include="Code\Hubs\ImportHub.cs" />
         <Compile Include="Code\Hubs\IStatusUpdateHub.cs" />
         <Compile Include="Code\Hubs\RollCallHub.cs" />
+        <Compile Include="Code\Session\ContextItems.cs" />
         <Compile Include="Models\BallotHelper.cs" />
         <Compile Include="Models\ElectionAnalyzerCore.cs" />
         <Compile Include="Models\IAnalyzerFakes.cs" />

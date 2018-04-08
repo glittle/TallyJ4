@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Html;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TallyJ3.Extensions;
+using TallyJ3.Models;
 
 namespace TallyJ3.Code.Session
 {
@@ -64,7 +67,7 @@ namespace TallyJ3.Code.Session
 		}
 
 		/// <summary>Called from the page, insert any javascript that was defined in server code.</summary>
-		public static IHtmlString GetJavascriptForPage()
+		public static HtmlString GetJavascriptForPage()
 		{
 			var resources = ResourcesForJavascript;
 
@@ -80,8 +83,6 @@ namespace TallyJ3.Code.Session
                        };
 				javascriptForPage.Add("resources", script.JoinedAsString());
 			}
-
-			AddJavascriptForPage("jsTemplates", TemplateLoader.GetTemplates());
 
 			// read it again, to get the new values
 			javascriptForPage = JavascriptForPage;

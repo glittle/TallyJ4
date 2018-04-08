@@ -179,12 +179,40 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Ballot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BallotGuid");
+
+                    b.Property<int>("BallotNumAtComputer");
+
+                    b.Property<string>("C_BallotCode");
+
+                    b.Property<byte[]>("C_RowVersion");
+
+                    b.Property<string>("ComputerCode");
+
+                    b.Property<Guid>("LocationGuid");
+
+                    b.Property<string>("StatusCode");
+
+                    b.Property<string>("Teller1");
+
+                    b.Property<string>("Teller2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ballot");
+                });
+
             modelBuilder.Entity("TallyJ3.Data.DbModel.Election", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BallotProcessRaw");
+                    b.Property<string>("BallotProcess");
 
                     b.Property<byte[]>("C_RowVersion");
 
@@ -204,7 +232,13 @@ namespace TallyJ3.Data.Migrations
 
                     b.Property<string>("ElectionType");
 
-                    b.Property<string>("EnvNumModeRaw");
+                    b.Property<string>("EnvNumMode");
+
+                    b.Property<string>("ExtraFuture1");
+
+                    b.Property<string>("ExtraFuture2");
+
+                    b.Property<string>("ExtraFuture3");
 
                     b.Property<bool?>("HidePreBallotPages");
 
@@ -232,7 +266,7 @@ namespace TallyJ3.Data.Migrations
 
                     b.Property<bool?>("ShowFullReport");
 
-                    b.Property<bool>("T24");
+                    b.Property<bool?>("T24");
 
                     b.Property<string>("TallyStatus");
 
@@ -240,7 +274,30 @@ namespace TallyJ3.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ElectionGuid")
+                        .IsUnique();
+
                     b.ToTable("Election");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.JoinElectionUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<string>("Role");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<string>("UsersId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("JoinElectionUser");
                 });
 
             modelBuilder.Entity("TallyJ3.Data.DbModel.Location", b =>
@@ -271,9 +328,29 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Location");
                 });
 
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AsOf");
+
+                    b.Property<string>("ComputerCode");
+
+                    b.Property<string>("Details");
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<Guid?>("LocationGuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log");
+                });
+
             modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>
                 {
-                    b.Property<int>("OnlineTempBallotId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ApplicationUserId");
@@ -284,11 +361,223 @@ namespace TallyJ3.Data.Migrations
 
                     b.Property<string>("Status");
 
-                    b.HasKey("OnlineTempBallotId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("OnlineTempBallots");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AgeGroup");
+
+                    b.Property<string>("Area");
+
+                    b.Property<string>("BahaiId");
+
+                    b.Property<string>("C_FullName");
+
+                    b.Property<string>("C_FullNameFL");
+
+                    b.Property<byte[]>("C_RowVersion");
+
+                    b.Property<long?>("C_RowVersionInt");
+
+                    b.Property<bool?>("CanReceiveVotes");
+
+                    b.Property<bool?>("CanVote");
+
+                    b.Property<string>("CombinedInfo");
+
+                    b.Property<string>("CombinedInfoAtStart");
+
+                    b.Property<string>("CombinedSoundCodes");
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<string>("EmailAddress");
+
+                    b.Property<int?>("EnvNum");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<Guid?>("IneligibleReasonGuid");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("OtherInfo");
+
+                    b.Property<string>("OtherLastNames");
+
+                    b.Property<string>("OtherNames");
+
+                    b.Property<Guid>("PersonGuid");
+
+                    b.Property<string>("RegistrationLog");
+
+                    b.Property<DateTime?>("RegistrationTime");
+
+                    b.Property<string>("Teller1");
+
+                    b.Property<string>("Teller2");
+
+                    b.Property<Guid?>("VotingLocationGuid");
+
+                    b.Property<string>("VotingMethod");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Result", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("CloseToNext");
+
+                    b.Property<bool?>("CloseToPrev");
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<bool?>("ForceShowInOther");
+
+                    b.Property<bool?>("IsTieResolved");
+
+                    b.Property<bool?>("IsTied");
+
+                    b.Property<Guid>("PersonGuid");
+
+                    b.Property<int>("Rank");
+
+                    b.Property<int?>("RankInExtra");
+
+                    b.Property<string>("Section");
+
+                    b.Property<int?>("TieBreakCount");
+
+                    b.Property<int?>("TieBreakGroup");
+
+                    b.Property<bool?>("TieBreakRequired");
+
+                    b.Property<int?>("VoteCount");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Result");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.ResultSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("BallotsNeedingReview");
+
+                    b.Property<int?>("BallotsReceived");
+
+                    b.Property<int?>("CalledInBallots");
+
+                    b.Property<int?>("DroppedOffBallots");
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<int?>("InPersonBallots");
+
+                    b.Property<int?>("MailedInBallots");
+
+                    b.Property<int?>("NumEligibleToVote");
+
+                    b.Property<int?>("NumVoters");
+
+                    b.Property<string>("ResultType");
+
+                    b.Property<int?>("SpoiledBallots");
+
+                    b.Property<int?>("SpoiledManualBallots");
+
+                    b.Property<int?>("SpoiledVotes");
+
+                    b.Property<int?>("TotalVotes");
+
+                    b.Property<bool?>("UseOnReports");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResultSummary");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.ResultTie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<bool?>("IsResolved");
+
+                    b.Property<int>("NumInTie");
+
+                    b.Property<int>("NumToElect");
+
+                    b.Property<int>("TieBreakGroup");
+
+                    b.Property<bool?>("TieBreakRequired");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResultTie");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Teller", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("C_RowVersion");
+
+                    b.Property<Guid>("ElectionGuid");
+
+                    b.Property<bool?>("IsHeadTeller");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UsingComputerCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teller");
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BallotGuid");
+
+                    b.Property<byte[]>("C_RowVersion");
+
+                    b.Property<Guid?>("InvalidReasonGuid");
+
+                    b.Property<string>("PersonCombinedInfo");
+
+                    b.Property<Guid?>("PersonGuid");
+
+                    b.Property<int>("PositionOnBallot");
+
+                    b.Property<int?>("SingleNameElectionCount");
+
+                    b.Property<string>("StatusCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vote");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -334,6 +623,13 @@ namespace TallyJ3.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TallyJ3.Data.DbModel.JoinElectionUser", b =>
+                {
+                    b.HasOne("TallyJ3.Data.ApplicationUser", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>

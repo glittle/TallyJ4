@@ -22,7 +22,6 @@ namespace TallyJ3
 {
     public class Startup
     {
-        private static IHubContext<PublicHub> _publicHub;
 
         public Startup(IConfiguration configuration)
         {

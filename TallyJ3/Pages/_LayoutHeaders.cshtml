@@ -1,0 +1,63 @@
+﻿@using TallyJ3.Code.Session
+@using TallyJ3.Code.Helper
+@using TallyJ3.Extensions
+@using Microsoft.AspNetCore.Mvc.Razor
+@{
+  var page = (IRazorPage)ViewData["Page"];
+}
+<environment include="Development">
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+  <link href="@Url.Content("~/css/Site.css").WithVersion()" rel="stylesheet" type="text/css" />
+</environment>
+<environment exclude="Development">
+  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+        asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+        asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+  <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+</environment>
+<link href="@Url.Content("~/css/themes/base/jquery.ui.theme.css").WithVersion()" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/jquery.qtip.min.css").WithVersion()" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/Site.css").WithVersion()" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/css/Site2.css").WithVersion()" rel="stylesheet" type="text/css" />
+@FileLinking.AddAssociatedCssTag(page)
+
+
+@*<script src="@ClientFile("~/Scripts/jquery-3.2.1{0}.js", ".min")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/jquery-ui-1.12.1{0}.js", ".min")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Content/Bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/AjaxLogin.js")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/jquery.qtip.js")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/superfish.js")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/jquery.signalR-2.2.2{0}.js", ".min")" type="text/javascript"></script>
+  <script src="@Url.Content("~/signalr/hubs")" type="text/javascript"></script>
+  <script src="@ClientFile("~/Scripts/site.js")" type="text/javascript"></script>
+  @if (ViewData["ExtraScripts"] != null)
+  {
+    foreach (var s in (string[])ViewData["ExtraScripts"])
+    {
+      <script src="@s" type="text/javascript"></script>
+    }
+  }
+  @AddResourceFilesForViews("js")
+
+
+  <link rel="shortcut icon" href="@Url.Content("~/Images/favicon.ico")">
+  <link rel="publisher" href="https://plus.google.com/109176504285792009711">
+  @if (Request.Url.Host != "localhost")
+  {
+    <script type="text/javascript">
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', 'UA-1312528-6', 'www.tallyj.com');
+      ga('send', 'pageview');
+    </script>
+  }
+  @ContextItems.GetJavascriptForPage()
+*@
+

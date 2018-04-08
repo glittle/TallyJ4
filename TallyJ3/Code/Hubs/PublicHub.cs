@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace TallyJ3.Code.Hubs
 {
