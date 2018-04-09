@@ -10,7 +10,7 @@ namespace TallyJ3.Controllers
   public class MiscController : Controller
   {
     [HttpPost]
-    public object GetTimeOffset([FromBody] long now = 0)
+    public object GetTimeOffset(long now = 0)
     {
       if (now == 0)
       {

@@ -841,6 +841,7 @@ String.prototype.parseJsonDateForInput = function () {
 
 function JsonParse(json) {
   if (json == '') return null;
+  if (typeof json !== 'string') return json;
   if (typeof (JSON) != 'undefined' && JSON) {
     //if (!!window.chrome) json = json.replace('\\', '\\\\');
     try {

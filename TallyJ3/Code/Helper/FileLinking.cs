@@ -35,7 +35,7 @@ namespace TallyJ3.Code.Helper
         return null;
       }
 
-      return new HtmlString("<link rel='stylesheet' href='" + page.Path.Replace("/Pages", RequestPath) + ".css?v=" + version + "'>");
+      return new HtmlString("<link rel='stylesheet' href='{0}.css{1}'>".FilledWith(page.Path.Replace("/Pages", RequestPath), version));
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ namespace TallyJ3.Code.Helper
         return null;
       }
 
-      return new HtmlString("<script src='" + page.Path.Replace("/Pages", RequestPath) + ".js?v=" + version + "'></script>");
+      return new HtmlString("<script src='{0}.js{1}'></script>".FilledWith(page.Path.Replace("/Pages", RequestPath), version));
     }
 
     /// <summary>
@@ -73,10 +73,6 @@ namespace TallyJ3.Code.Helper
           contentFilePath.FilledWith(useProductionFiles ? productionNameModifier : debuggingNameModifier);
       }
 
-      if (contentFilePath.StartsWith("~"))
-      {
-
-      }
 
       var version = GetVersionCode(contentFilePath);
       if (version == null)
@@ -84,7 +80,12 @@ namespace TallyJ3.Code.Helper
         return null;
       }
 
-      return new HtmlString("<link rel='stylesheet' href='" + contentFilePath + ".css?v=" + version + "'>");
+      if (contentFilePath.StartsWith("~"))
+      {
+        contentFilePath = contentFilePath.Substring(1);
+      }
+
+      return new HtmlString("<link rel='stylesheet' href='" + contentFilePath + "?v=" + version + "'>");
     }
 
 
@@ -104,7 +105,12 @@ namespace TallyJ3.Code.Helper
         return null;
       }
 
-      return new HtmlString("<script src='" + contentFilePath + ".js?v=" + version + "'></script>");
+      if (contentFilePath.StartsWith("~"))
+      {
+        contentFilePath = contentFilePath.Substring(1);
+      }
+
+      return new HtmlString("<script src='" + contentFilePath + "?v=" + version + "'></script>");
     }
 
     public static string WithVersion(this string filePath)
@@ -120,10 +126,10 @@ namespace TallyJ3.Code.Helper
       var rawPath = contentFilePath;
       if (rawPath.StartsWith("~"))
       {
-        rawPath = rawPath.Substring(1);
+        rawPath = "wwwroot\\" + rawPath.Substring(1);
       }
       else {
-        rawPath = "wwwroot\\" + contentFilePath;
+        rawPath = contentFilePath;
       }
 
       var fileInfo = Startup.Env.ContentRootFileProvider.GetFileInfo(rawPath);
