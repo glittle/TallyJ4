@@ -2,28 +2,27 @@
 @model IndexModel
 @using TallyJ3.Data.Caching
 @{
-    ViewData["Title"] = "Home page";
-    ViewData["Page"] = this;
+  ViewData["Title"] = "Home page";
+  ViewData["Page"] = this;
 }
 <div class="row">
-    
-    <div>
-        <h2>Glen</h2>
-        <ul>
-            <li>
-                @HttpContext.Session.GetString("Test1")
-            </li>
-        </ul>
-    </div>
-   
-    <div class="col-lg-1">
-        <h2>Test</h2>
-        <ul>
-            @UserSession.GetNewDbContext().OnlineTempBallots.Select(e => $"<li>OLBallot {e.PersonGuidList} - {e.ElectionGuid}</li>").JoinedAsString().AsRawHtml()
-            @(new LocationCacher().AllForThisElection.Select(e => $"<li>Location {e.Name} - {e.LocationGuid}</li>").JoinedAsString().AsRawHtml())
-        </ul>
-    </div>
+  <div>
+    <h2>Glen</h2>
+    <ul>
+      <li>
+        @HttpContext.Session.GetString("Test1")
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-lg-1">
+    <h2>Test</h2>
+    <ul>
+      @UserSession.GetNewDbContext().OnlineTempBallots.Select(e => $"<li>OLBallot {e.PersonGuidList} - {e.ElectionGuid}</li>").JoinedAsString().AsRawHtml()
+      @(new LocationCacher().AllForThisElection.Select(e => $"<li>Location {e.Name} - {e.LocationGuid}</li>").JoinedAsString().AsRawHtml())
+    </ul>
+  </div>
 </div>
 @{
-    HttpContext.Session.SetString("Test1", "Hello!");
+  HttpContext.Session.SetString("Test1", "Hello!");
 }

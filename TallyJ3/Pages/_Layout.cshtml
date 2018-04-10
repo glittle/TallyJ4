@@ -4,10 +4,10 @@
   var page = (IRazorPage)ViewData["Page"];
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>@ViewData["Title"] - TallyJ</title>
  
   @Html.Partial("_LayoutHeaders")
@@ -40,7 +40,7 @@
     @RenderBody()
     <hr />
     <footer>
-      <p>&copy; 2017 - TallyJ3 - Version <span class="Version" title="@Startup.Configuration["TallyJVersion:Date"]">@Startup.Configuration["TallyJVersion:Code"]</span></p>
+      <p>&copy; 2018 - TallyJ3 - Version <span class="Version" title="@Startup.Configuration["TallyJVersion:Date"]">@Startup.Configuration["TallyJVersion:Code"]</span></p>
     </footer>
   </div>
 
@@ -49,5 +49,20 @@
   @FileLinking.AddAssociatedJsTag(page)
   @ContextItems.GetJavascriptForPage()
 
+  @if (Startup.HttpContext.Request.Host.Host != "localhost")
+  {
+    <script type="text/javascript">
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-1312528-6', 'www.tallyj.com');
+    ga('send', 'pageview');
+    </script>
+  }
 </body>
 </html>

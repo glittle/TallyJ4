@@ -530,6 +530,9 @@ namespace TallyJ3.Extensions
       return input.HasValue && input.Value == 0 ? input.Value : defaultValue;
     }
 
+    public static string QuotedForJavascript(this bool input) {
+      return input ? "true" : "false";
+    }
 
     public static string QuotedForJavascript(this string input)
     {
