@@ -245,7 +245,9 @@ namespace TallyJ3.Code.Helper
           fileInfo = _fileProvider.GetFileInfo(requestPathBaseRelativePath);
         }
 
-        cacheEntryOptions.AddExpirationToken(_fileProvider.Watch(fileInfo.PhysicalPath));
+        var relativePath = fileInfo.PhysicalPath.Replace(((PhysicalFileProvider)_fileProvider).Root, "");
+
+        cacheEntryOptions.AddExpirationToken(_fileProvider.Watch(relativePath));
 
         if (fileInfo.Exists)
         {
