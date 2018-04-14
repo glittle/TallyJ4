@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TallyJ3", "TallyJ3\TallyJ3.csproj", "{BC15A6E5-F0FB-4FD4-BBC0-14F116148F27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TallyJ4", "TallyJ4\TallyJ4.csproj", "{BC15A6E5-F0FB-4FD4-BBC0-14F116148F27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TallyJ3Tests", "TallyJ3Tests\TallyJ3Tests.csproj", "{F5C3AD69-09A6-4829-BFF7-9695359EB32E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TallyJ4Tests", "TallyJ4Tests\TallyJ4Tests.csproj", "{F5C3AD69-09A6-4829-BFF7-9695359EB32E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,9 +5,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>TallyJ3Tests</AssemblyName>
+    <AssemblyName>TallyJ4Tests</AssemblyName>
 
-    <RootNamespace>TallyJ3Tests</RootNamespace>
+    <RootNamespace>TallyJ34ests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TallyJ3\TallyJ3.csproj" />
+    <ProjectReference Include="..\TallyJ4\TallyJ4.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>
