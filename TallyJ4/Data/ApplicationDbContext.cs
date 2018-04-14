@@ -56,7 +56,7 @@ namespace TallyJ4.Data
   {
     public ApplicationDbContext CreateDbContext(string[] args)
     {
-      var cnString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-TallyJ4-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true";
+      var cnString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-TallyJ4;Trusted_Connection=True;MultipleActiveResultSets=true";
 
       var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 

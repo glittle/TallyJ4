@@ -8,8 +8,11 @@
     }
   },
   "profiles": {
-    "TallyJ4": {
-      "commandName": "IISExpress"
+    "Main Profile": {
+      "commandName": "IISExpress",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
