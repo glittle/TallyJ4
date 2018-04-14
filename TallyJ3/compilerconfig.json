@@ -2,5 +2,13 @@
   {
     "outputFile": "Pages/Index.cshtml.css",
     "inputFile": "Pages/Index.cshtml.less"
+  },
+  {
+    "outputFile": "wwwroot/css/Site.css",
+    "inputFile": "wwwroot/css/Site.less"
+  },
+  {
+    "outputFile": "wwwroot/css/site2.css",
+    "inputFile": "wwwroot/css/site2.scss"
   }
 ]

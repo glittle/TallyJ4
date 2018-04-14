@@ -1,0 +1,73 @@
+﻿@page
+@model IndexModel
+@{
+  ViewData["Page"] = this;
+
+  ViewBag.Title = "Reports";
+  ViewBag.Message = "Report the results";
+
+  ContextItems.AddJavascriptForPage("pageUrl", "reportsPage.controllerUrl={0};".FilledWith(Url.Action("Index").QuotedForJavascript()));
+  ContextItems.AddJavascriptForPage("reportsPage.electionTitle={0};".FilledWith(UserSession.CurrentElectionName.QuotedForJavascript()));
+
+  var ballotProcessEnum = UserSession.CurrentElection.BallotProcessAsEnum;
+  var showVoters = ballotProcessEnum != TallyJ3.Data.DbModel.BallotProcessEnum.None;
+  var hasLocations = ContextItems.LocationModel.HasLocations;
+  var firstHeader = false;
+
+  var reports = new Dictionary<string, string>
+{
+{ "SimpleResults|Ballot Reports", "Main Election Report"},
+{ "VotesByNum", "Tellers' Report, by Votes"},
+{ "VotesByName", "Tellers' Report, by Name"},
+{ "Ballots", "Ballots (All for Review)"},
+{ "BallotsTied", "Ballots (For Tied)"},
+{ "VotesWithInvalid", "Spoiled Votes"},
+{ "BallotAlignment", "Ballot Alignment"},
+{ "BallotsSame", "Duplicate Ballots"},
+
+{ "ChangedPeople|Voter Reports", "Updated People Records"},
+{ "Voters", showVoters ? "Participation" : null},
+{ "VotersByArea", showVoters ? "Eligible and Voted by Area" : null},
+{"VotersByLocation", hasLocations ? "Voters by Location" : null},
+{ "VotersByLocationArea", hasLocations ? "Attendance by Location and Area" : null },
+{ "AllNonEligible", "Non-voters on file"},
+};
+}
+<div class="reportsPage">
+  <div class="chooser">
+    <div>
+      @foreach (var r in reports)
+      {
+        if (r.Value.HasNoContent())
+        {
+          continue;
+        }
+        var keyParts = r.Key.Split('|');
+        var href = keyParts[0];
+        if (keyParts.Length == 2)
+        {
+          if (firstHeader)
+          {
+            @("</ul></div><div>".AsRawHtml())
+          }
+          @("<h2>{0}</h2><ul>".FilledWith(keyParts[1]).AsRawHtml())
+
+          firstHeader = true;
+        }
+        <li><a href='#@href'>@r.Value</a></li>
+      }
+      @("</ul>".AsRawHtml())
+    </div>
+    <div class="lastCol">
+      <button type="button" onclick="window.print()" class="btn btn-info btnPrint">Print (Ctrl+P)</button>
+      <p class="Comment ">Some browsers, such as Chrome, can create a PDF copy of the report when printing.</p>
+    </div>
+  </div>
+  <div class="reportPanel">
+    <div id="Status">
+      Please select a report...
+    </div>
+    <div id="report">
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using TallyJ3.Models;
+using TallyJ3.Data.DbModel;
 
 namespace TallyJ3.Data
 {

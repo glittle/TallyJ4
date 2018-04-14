@@ -39,13 +39,13 @@
 
         // find this person
         var i = local.localNames.findIndex(function(person) {
-            return person.Id === editedPerson.C_RowId;
+            return person.Id === editedPerson.Id;
         });
 
         if (i === -1) {
             // new person, adjust to fit
             editedPerson.Name = editedPerson.C_FullName;
-            editedPerson.Id = editedPerson.C_RowId;
+            editedPerson.Id = editedPerson.Id;
             editedPerson.NumVotes = 0;
 
             extendPersonCore(editedPerson);

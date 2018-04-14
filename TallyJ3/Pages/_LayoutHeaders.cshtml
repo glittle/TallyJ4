@@ -1,0 +1,24 @@
+﻿@using TallyJ3.Code.Session
+@using TallyJ3.Code.Helper
+@using TallyJ3.Extensions
+@using Microsoft.AspNetCore.Mvc.Razor
+@{
+  var page = (IRazorPage)ViewData["Page"];
+}
+@FileLinking.CssTag("~/css/themes/base/jquery.ui.theme.css")
+@FileLinking.CssTag("~/css/jquery.qtip.min.css")
+@FileLinking.CssTag("~/css/Site.css")
+@FileLinking.CssTag("~/css/Site2.css")
+@FileLinking.AddAssociatedCssTag(page)
+
+<link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">
+<link rel="publisher" href="https://plus.google.com/109176504285792009711">
+
+
+@if (ViewData["ExtraScripts"] != null)
+{
+  foreach (var s in (string[])ViewData["ExtraScripts"])
+  {
+    <script src="@s" type="text/javascript"></script>
+  }
+}
