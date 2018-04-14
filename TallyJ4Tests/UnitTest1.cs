@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TallyJ3Tests.Support;
+using TallyJ4Tests.Support;
 
-namespace TallyJ3Tests
+namespace TallyJ4Tests
 {
     [TestClass]
     public class UnitTest1

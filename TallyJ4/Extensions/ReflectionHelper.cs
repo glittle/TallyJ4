@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace TallyJ3.Extensions
+namespace TallyJ4.Extensions
 {
   public static class ReflectionHelper
   {

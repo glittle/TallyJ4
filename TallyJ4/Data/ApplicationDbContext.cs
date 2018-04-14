@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using TallyJ3.Data.DbModel;
+using TallyJ4.Data.DbModel;
 
-namespace TallyJ3.Data
+namespace TallyJ4.Data
 {
   public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
   {
@@ -56,7 +56,7 @@ namespace TallyJ3.Data
   {
     public ApplicationDbContext CreateDbContext(string[] args)
     {
-      var cnString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-TallyJ3-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true";
+      var cnString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-TallyJ4-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true";
 
       var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 

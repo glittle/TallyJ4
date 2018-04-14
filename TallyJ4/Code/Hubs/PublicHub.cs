@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace TallyJ3.Code.Hubs
+namespace TallyJ4.Code.Hubs
 {
     public interface IPublicHubHelper
     {

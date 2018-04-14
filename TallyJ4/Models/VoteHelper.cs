@@ -1,9 +1,9 @@
 using System;
-using TallyJ3.Code.Enumerations;
-using TallyJ3.Code.Session;
-using TallyJ3.Extensions;
+using TallyJ4.Code.Enumerations;
+using TallyJ4.Code.Session;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Models
+namespace TallyJ4.Models
 {
   public class VoteHelper
   {

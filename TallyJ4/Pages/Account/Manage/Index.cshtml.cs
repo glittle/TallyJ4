@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TallyJ3.Data;
-using TallyJ3.Services;
+using TallyJ4.Data;
+using TallyJ4.Services;
 
-namespace TallyJ3.Pages.Account.Manage
+namespace TallyJ4.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {

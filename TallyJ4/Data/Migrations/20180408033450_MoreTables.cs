@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace TallyJ3.Data.Migrations
+namespace TallyJ4.Data.Migrations
 {
     public partial class MoreTables : Migration
     {

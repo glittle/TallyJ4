@@ -8,9 +8,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using TallyJ3.Code.Session;
+using TallyJ4.Code.Session;
 
-namespace TallyJ3.Extensions
+namespace TallyJ4.Extensions
 {
   public static class MiscExtensions
   {

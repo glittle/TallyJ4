@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Controllers
+namespace TallyJ4.Controllers
 {
     [Route("[controller]/[action]")]
     public class AccountController : Controller

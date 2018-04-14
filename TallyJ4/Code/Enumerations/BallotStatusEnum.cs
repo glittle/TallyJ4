@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 using Microsoft.AspNetCore.Html;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
     public class BallotStatusEnum : BaseEnumeration<BallotStatusEnum, string>
   {

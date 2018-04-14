@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
   public partial class Election : IIndexedForCaching
   {

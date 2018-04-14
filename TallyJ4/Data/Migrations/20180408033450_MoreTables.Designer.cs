@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Data.Migrations
+namespace TallyJ4.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20180408033450_MoreTables")]
@@ -129,7 +129,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.ApplicationUser", b =>
+            modelBuilder.Entity("TallyJ4.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -180,7 +180,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Ballot", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Ballot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -208,7 +208,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Ballot");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Election", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Election", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -281,7 +281,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Election");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.JoinElectionUser", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.JoinElectionUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -301,7 +301,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("JoinElectionUser");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Location", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -329,7 +329,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Location");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Log", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Log", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -349,7 +349,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Log");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.OnlineTempBallot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -369,7 +369,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("OnlineTempBallots");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Person", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -435,7 +435,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Result", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Result", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -473,7 +473,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Result");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.ResultSummary", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.ResultSummary", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -513,7 +513,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("ResultSummary");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.ResultTie", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.ResultTie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -535,7 +535,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("ResultTie");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Teller", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Teller", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -555,7 +555,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Teller");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Vote", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Vote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -591,7 +591,7 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -599,7 +599,7 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -612,7 +612,7 @@ namespace TallyJ3.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -620,22 +620,22 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.JoinElectionUser", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.JoinElectionUser", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser", "Users")
+                    b.HasOne("TallyJ4.Data.ApplicationUser", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.OnlineTempBallot", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("OnlineTempBallots")
                         .HasForeignKey("ApplicationUserId");
                 });

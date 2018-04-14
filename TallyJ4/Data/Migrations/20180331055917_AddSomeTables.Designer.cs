@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Data.Migrations
+namespace TallyJ4.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20180331055917_AddSomeTables")]
@@ -129,7 +129,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.ApplicationUser", b =>
+            modelBuilder.Entity("TallyJ4.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -180,7 +180,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Election", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Election", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -244,7 +244,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Election");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.Location", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -272,7 +272,7 @@ namespace TallyJ3.Data.Migrations
                     b.ToTable("Location");
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.OnlineTempBallot", b =>
                 {
                     b.Property<int>("OnlineTempBallotId")
                         .ValueGeneratedOnAdd();
@@ -302,7 +302,7 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -310,7 +310,7 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -323,7 +323,7 @@ namespace TallyJ3.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -331,15 +331,15 @@ namespace TallyJ3.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TallyJ3.Data.DbModel.OnlineTempBallot", b =>
+            modelBuilder.Entity("TallyJ4.Data.DbModel.OnlineTempBallot", b =>
                 {
-                    b.HasOne("TallyJ3.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TallyJ4.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("OnlineTempBallots")
                         .HasForeignKey("ApplicationUserId");
                 });

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
-using TallyJ3.Code.Session;
-using TallyJ3.Models;
+using TallyJ4.Code.Session;
+using TallyJ4.Models;
 
-namespace TallyJ3.Code.Hubs
+namespace TallyJ4.Code.Hubs
 {
     public interface IMainHubHelper
     {

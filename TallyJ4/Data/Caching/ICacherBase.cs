@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TallyJ3.Data.DbModel;
+using TallyJ4.Data.DbModel;
 
-namespace TallyJ3.Data.Caching
+namespace TallyJ4.Data.Caching
 {
   public interface ICacherBase<T> where T : class, IIndexedForCaching
   {

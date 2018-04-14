@@ -1,4 +1,4 @@
-namespace TallyJ3.Code.Helper
+namespace TallyJ4.Code.Helper
 {
     public class ResultType
     {

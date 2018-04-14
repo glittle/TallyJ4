@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using TallyJ3.Code.Hubs;
+using TallyJ4.Code.Hubs;
 
-namespace TallyJ3.Pages
+namespace TallyJ4.Pages
 {
   public class AboutModel : PageModel
     {

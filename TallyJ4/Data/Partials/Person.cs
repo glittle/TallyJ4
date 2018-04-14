@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq;
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
     //[MetadataType(typeof(PersonMetadata))]
     public partial class Person

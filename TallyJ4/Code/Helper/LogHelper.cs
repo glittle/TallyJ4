@@ -5,11 +5,11 @@ using System.Configuration;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using TallyJ3.Code.Session;
-using TallyJ3.Data.DbModel;
-using TallyJ3.Extensions;
+using TallyJ4.Code.Session;
+using TallyJ4.Data.DbModel;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Code.Helper
+namespace TallyJ4.Code.Helper
 {
     public interface ILogHelper
     {

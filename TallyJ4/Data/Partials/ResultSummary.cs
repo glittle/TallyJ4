@@ -1,7 +1,7 @@
 ﻿using System;
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
   public partial class ResultSummary : IIndexedForCaching
   {

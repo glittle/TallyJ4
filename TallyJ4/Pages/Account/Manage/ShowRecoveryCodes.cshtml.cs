@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TallyJ3.Pages.Account.Manage
+namespace TallyJ4.Pages.Account.Manage
 {
     public class ShowRecoveryCodesModel : PageModel
     {

@@ -1,12 +1,12 @@
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 using Microsoft.AspNetCore.Html;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TallyJ3.EF;
-using TallyJ3.Data.DbModel;
+using TallyJ4.EF;
+using TallyJ4.Data.DbModel;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
   public class LocationStatusEnum : BaseEnumeration<LocationStatusEnum, string>
   {

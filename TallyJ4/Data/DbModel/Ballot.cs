@@ -1,4 +1,4 @@
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
     
     public partial class Ballot : IIndexedForCaching

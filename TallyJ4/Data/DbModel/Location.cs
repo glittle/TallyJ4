@@ -1,6 +1,6 @@
 using System;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
   [Serializable]
   public partial class Location : IIndexedForCaching

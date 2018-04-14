@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace TallyJ3.Pages.Account.Manage
+namespace TallyJ4.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

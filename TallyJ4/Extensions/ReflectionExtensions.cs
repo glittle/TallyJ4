@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml;
 
-namespace TallyJ3.Extensions
+namespace TallyJ4.Extensions
 {
   public static class ReflectionExtensions
   {

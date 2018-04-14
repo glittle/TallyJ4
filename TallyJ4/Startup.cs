@@ -12,13 +12,13 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using TallyJ3.Code.Helper;
-using TallyJ3.Code.Hubs;
-using TallyJ3.Code.Misc;
-using TallyJ3.Data;
-using TallyJ3.Services;
+using TallyJ4.Code.Helper;
+using TallyJ4.Code.Hubs;
+using TallyJ4.Code.Misc;
+using TallyJ4.Data;
+using TallyJ4.Services;
 
-namespace TallyJ3
+namespace TallyJ4
 {
   public class Startup
   {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using TallyJ3.Data.DbModel;
+using TallyJ4.Data.DbModel;
 
-namespace TallyJ3.Data
+namespace TallyJ4.Data
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser

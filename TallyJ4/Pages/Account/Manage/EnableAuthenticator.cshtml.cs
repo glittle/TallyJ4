@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Pages.Account.Manage
+namespace TallyJ4.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
@@ -131,7 +131,7 @@ namespace TallyJ3.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("TallyJ3"),
+                _urlEncoder.Encode("TallyJ4"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

@@ -10,7 +10,7 @@
   ContextItems.AddJavascriptForPage("reportsPage.electionTitle={0};".FilledWith(UserSession.CurrentElectionName.QuotedForJavascript()));
 
   var ballotProcessEnum = UserSession.CurrentElection.BallotProcessAsEnum;
-  var showVoters = ballotProcessEnum != TallyJ3.Data.DbModel.BallotProcessEnum.None;
+  var showVoters = ballotProcessEnum != TallyJ4.Data.DbModel.BallotProcessEnum.None;
   var hasLocations = ContextItems.LocationModel.HasLocations;
   var firstHeader = false;
 

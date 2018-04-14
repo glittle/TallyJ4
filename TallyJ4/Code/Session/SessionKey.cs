@@ -1,4 +1,4 @@
-namespace TallyJ3.Code.Session
+namespace TallyJ4.Code.Session
 {
 	public static class SessionKey
 	{

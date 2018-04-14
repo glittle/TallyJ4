@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using TallyJ3.Code.Session;
+using TallyJ4.Code.Session;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 
-namespace TallyJ3.EF
+namespace TallyJ4.EF
 {
     public class CacherHelper
     {

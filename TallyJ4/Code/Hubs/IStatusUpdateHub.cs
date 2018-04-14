@@ -1,4 +1,4 @@
-﻿namespace TallyJ3.Code.Hubs
+﻿namespace TallyJ4.Code.Hubs
 {
     public interface IStatusUpdateHub
     {

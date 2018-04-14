@@ -1,9 +1,9 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TallyJ3.Extensions;
-using TallyJ3Tests.Support;
+using TallyJ4.Extensions;
+using TallyJ4Tests.Support;
 
-namespace TallyJ3Tests.FrameworkTests
+namespace TallyJ4Tests.FrameworkTests
 {
   [TestClass]
   public class ReflectionHelperTests

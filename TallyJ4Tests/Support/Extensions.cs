@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TallyJ3Tests.Support
+namespace TallyJ4Tests.Support
 {
   public static class Extensions
   {

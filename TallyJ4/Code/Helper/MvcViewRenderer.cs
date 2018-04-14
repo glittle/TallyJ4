@@ -1,7 +1,7 @@
 using RazorLight;
 using System.Configuration;
 
-namespace TallyJ3.Code.Helpers
+namespace TallyJ4.Code.Helpers
 {
   public class MvcViewRenderer
   {

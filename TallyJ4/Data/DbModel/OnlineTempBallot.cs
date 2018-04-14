@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
     [Serializable]
     public class OnlineTempBallot : IIndexedForCaching

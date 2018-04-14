@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TallyJ3.Data;
+using TallyJ4.Data;
 
-namespace TallyJ3.Pages.Account
+namespace TallyJ4.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {

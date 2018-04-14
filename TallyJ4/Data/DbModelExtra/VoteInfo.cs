@@ -1,9 +1,9 @@
 ﻿using System;
-using TallyJ3.Code.Misc;
-using TallyJ3.Extensions;
-using TallyJ3.Models;
+using TallyJ4.Code.Misc;
+using TallyJ4.Extensions;
+using TallyJ4.Models;
 
-namespace TallyJ3.Data.DbModel
+namespace TallyJ4.Data.DbModel
 {
   public class VoteInfo
   {

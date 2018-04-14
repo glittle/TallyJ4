@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
-using TallyJ3.Data.DbModel;
-using TallyJ3.EF;
-using TallyJ3.Extensions;
+using TallyJ4.Data.DbModel;
+using TallyJ4.EF;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
     public class ElectionTallyStatusEnum : BaseEnumeration<ElectionTallyStatusEnum, string>
     {

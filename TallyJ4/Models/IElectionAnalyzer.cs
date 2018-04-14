@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TallyJ3.Data.DbModel;
+using TallyJ4.Data.DbModel;
 
-namespace TallyJ3.Models
+namespace TallyJ4.Models
 {
     public interface IElectionAnalyzer
     {

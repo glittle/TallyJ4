@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TallyJ3.Extensions
+namespace TallyJ4.Extensions
 {
   public class TemplateHelper
   {

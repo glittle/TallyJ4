@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace TallyJ3.Data.Migrations
+namespace TallyJ4.Data.Migrations
 {
     public partial class AddSomeTables : Migration
     {

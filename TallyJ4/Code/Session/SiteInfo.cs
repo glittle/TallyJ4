@@ -1,9 +1,9 @@
 using System;
 using System.Configuration;
 using System.Web;
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 
-namespace TallyJ3.Code.Session
+namespace TallyJ4.Code.Session
 {
     public enum HostMode
     {

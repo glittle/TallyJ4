@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
   /*
    * 

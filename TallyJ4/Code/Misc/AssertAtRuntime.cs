@@ -1,6 +1,6 @@
 using System;
 
-namespace TallyJ3.Code.Misc
+namespace TallyJ4.Code.Misc
 {
   public class AssertAtRuntime
   {

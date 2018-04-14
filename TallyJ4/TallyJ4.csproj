@@ -160,4 +160,7 @@
       <None Include="wwwroot\css\bootstrap\scss\_utilities.scss" />
       <None Include="wwwroot\css\bootstrap\scss\_variables.scss" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
 </Project>

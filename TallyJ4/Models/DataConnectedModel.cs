@@ -1,9 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
-using TallyJ3.Code.Session;
-using TallyJ3.Data;
+using TallyJ4.Code.Session;
+using TallyJ4.Data;
 
-namespace TallyJ3.Models
+namespace TallyJ4.Models
 {
     public abstract class DataConnectedModel
     {

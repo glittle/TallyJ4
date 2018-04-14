@@ -1,11 +1,11 @@
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 using Microsoft.AspNetCore.Html;
 using System.Linq;
 using System.Net.Sockets;
 using System.Web;
-using TallyJ3.EF;
+using TallyJ4.EF;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
   public class VotingMethodEnum : BaseEnumeration<VotingMethodEnum, string>
   {

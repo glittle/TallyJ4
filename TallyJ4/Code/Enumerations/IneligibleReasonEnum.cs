@@ -1,11 +1,11 @@
-using TallyJ3.Extensions;
+using TallyJ4.Extensions;
 using Microsoft.AspNetCore.Html;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TallyJ3.Code.Enumerations
+namespace TallyJ4.Code.Enumerations
 {
   public class IneligibleReasonEnum : BaseEnumeration<IneligibleReasonEnum, Guid>
   {

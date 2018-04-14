@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TallyJ3.Extensions;
-using TallyJ3.Models;
+using TallyJ4.Extensions;
+using TallyJ4.Models;
 
-namespace TallyJ3.Code.Session
+namespace TallyJ4.Code.Session
 {
 	public static class ContextItems
 	{
