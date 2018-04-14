@@ -1,0 +1,8 @@
+﻿@using TallyJ4.Code.Helper
+@using Microsoft.AspNetCore.Mvc.Razor
+@{
+  var page = (IRazorPage)ViewBag.Component;
+}
+@FileLinking.AddAssociatedCssTag(page)
+@RenderBody()
+@FileLinking.AddAssociatedJsTag(page)

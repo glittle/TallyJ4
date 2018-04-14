@@ -1,28 +1,123 @@
 ﻿@page
 @model IndexModel
 @using TallyJ4.Data.Caching
+@using TallyJ4.Models
 @{
+  Layout = "_Layout3Blank";
   ViewData["Title"] = "Home page";
   ViewData["Page"] = this;
 }
-<div class="row">
-  <div>
-    <h2>Glen</h2>
-    <ul>
-      <li>
-        @HttpContext.Session.GetString("Test1")
-      </li>
-    </ul>
-  </div>
 
-  <div class="col-lg-1">
-    <h2>Test</h2>
-    <ul>
-      @UserSession.GetNewDbContext().OnlineTempBallots.Select(e => $"<li>OLBallot {e.PersonGuidList} - {e.ElectionGuid}</li>").JoinedAsString().AsRawHtml()
-      @(new LocationCacher().AllForThisElection.Select(e => $"<li>Location {e.Name} - {e.LocationGuid}</li>").JoinedAsString().AsRawHtml())
-    </ul>
-  </div>
+<div id="vueIndex">
+
+  <header>
+    <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-md-7 py-4">
+            <h4 class="text-white">About</h4>
+            <p class="text-muted">
+              The TallyJ Election System facilitates the recording of ballots and votes at a Bahá'í election.
+            </p>        <p class="text-muted">
+              TallyJ version 4 is in Beta! Please send feedback to Glen Little and refer to the Status and Feedback document for current updates!
+            </p>
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <h4 class="text-white">Contact</h4>
+            <ul class="list-unstyled">
+              <li><a href="#" class="text-white">Follow on Twitter</a></li>
+              <li><a href="#" class="text-white">Like on Facebook</a></li>
+              <li><a href="#" class="text-white">Email me</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-light bg-light box-shadow">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-text d-flex align-items-center">
+          <img class="LogoSq" src="@Url.Content("~/images/Logo144.png")">
+
+          <strong>TallyJ</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main role="main" class="bg-light">
+
+    <h2>What would you like to do?</h2>
+
+    <div class="album py-5">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <h5 class="card-title">Cast my Vote</h5>
+                <p class="card-text">
+                  Log in here to vote in an election.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <b-btn v-b-modal="'modalVoter'">Login</b-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <h5 class="card-title">Help as a Teller</h5>
+                <p class="card-text">
+                  Click below and find the election you are assisting in.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <b-btn v-b-modal="'modalGuestTeller'">Show Elections</b-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <h5 class="card-title">Manage an Election</h5>
+                <p class="card-text">Create or run an election as the Head Teller.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <b-btn v-b-modal="'modalHeadTeller'">Login</b-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+  <b-modal id="modalVoter" title="Log in to Vote">
+    Voter login
+  </b-modal>
+
+  <b-modal id="modalGuestTeller" title="Available Elections">
+    <public-elections></public-elections>
+  </b-modal>
+
+  <b-modal id="modalHeadTeller" title="Log in to Manage my Elections">
+    @Html.Partial("_LoginPartial")
+  </b-modal>
 </div>
-@{
-  HttpContext.Session.SetString("Test1", "Hello!");
-}
+
+@Html.Partial("VueComponents/PublicElections", new NullViewModel())

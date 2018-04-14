@@ -36,6 +36,7 @@
         <Compile Include="Models\BallotHelper.cs" />
         <Compile Include="Models\ElectionAnalyzerCore.cs" />
         <Compile Include="Models\IAnalyzerFakes.cs" />
+        <Compile Include="Models\NullViewModel.cs" />
         <Compile Include="Models\PublicElectionLister.cs" />
         <Compile Include="Models\Savers.cs" />
         <Compile Include="Models\TellerHelper.cs" />

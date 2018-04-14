@@ -5,15 +5,21 @@
 @{
   var page = (IRazorPage)ViewData["Page"];
 }
-@FileLinking.CssTag("~/css/themes/base/jquery.ui.theme.css")
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+
+@*@FileLinking.CssTag("~/css/themes/base/jquery.ui.theme.css")*@
 @FileLinking.CssTag("~/css/jquery.qtip.min.css")
-@FileLinking.CssTag("~/css/Site.css")
+@*@FileLinking.CssTag("~/css/Site.css")*@
 @FileLinking.CssTag("~/css/Site2.css")
 @FileLinking.AddAssociatedCssTag(page)
 
-<link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">
-<link rel="publisher" href="https://plus.google.com/109176504285792009711">
 
+<link rel="manifest" href="@Url.Content("~/manifest.json")">
+<link rel="icon" sizes="144x144" href="@Url.Content("~/images/Logo144.png")">
+<link rel="apple-touch-icon" href="@Url.Content("~/images/LogoSq.png")">
+@*<link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">*@
+<link rel="publisher" href="https://plus.google.com/109176504285792009711">
 
 @if (ViewData["ExtraScripts"] != null)
 {
@@ -22,3 +28,5 @@
     <script src="@s" type="text/javascript"></script>
   }
 }
+
+<script src="//unpkg.com/vue"></script>
