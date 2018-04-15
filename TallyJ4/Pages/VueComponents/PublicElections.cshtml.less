@@ -1,24 +1,48 @@
-﻿.LogoSq {
-  height: 1em;
-}
-h2{
-  text-align: center;
-}
+﻿.public-elections {
+  .elections, .custom-select[size]:not([size="1"]) {
+    width: 95%;
+    padding: 0;
+    padding-right: 0;
+  }
+
+  li {
+    margin: 12px 0 0 0;
+  }
+
+  label {
+    display: block;
+  }
+
+  option {
+    padding: 3px 3px 3px 6px;
+  }
 
 
-/* for bootstrap */
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
+  .passcode {
+    width: 200px;
+    color: #aaa;
+  }
 
-.modal.fade .modal-dialog {
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  -webkit-transition: none !important;
-  transition: none !important;
-  -moz-transform: none !important;
-  -ms-transform: none !important;
-  -o-transform: none !important;
-  -webkit-transform: none !important;
-  transform: none !important;
+  .joinStatus {
+    padding-left: 10px;
+    margin: 5px 0;
+
+    &.idle {
+      color: #999;
+    }
+
+    &.error {
+      color: red;
+    }
+
+    &.success {
+      color: green;
+    }
+
+    &.active {
+      color: orange;
+    }
+  }
+
+
 }

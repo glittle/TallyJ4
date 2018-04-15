@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/site2.css",
     "inputFile": "wwwroot/css/site2.scss"
+  },
+  {
+    "outputFile": "Pages/VueComponents/PublicElections.cshtml.css",
+    "inputFile": "Pages/VueComponents/PublicElections.cshtml.less"
   }
 ]

@@ -57,6 +57,7 @@
         <Compile Include="Models\PeopleModel.cs" />
         <Compile Include="Models\ResultHelper.cs" />
         <Compile Include="Models\ResultsModel.cs" />
+        <Compile Include="Models\TellerModel.cs" />
         <Compile Include="Models\VoteHelper.cs" />
     </ItemGroup>
     <ItemGroup>

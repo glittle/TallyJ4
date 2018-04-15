@@ -87,9 +87,10 @@ function showElectionInfo() {
   $('.passcodeOkay').toggle(site.passcode != '');
   $('.passcodeLocked').toggle(site.passcode == '');
 
-  $('.passcode').on('click', function () {
-    location.href = site.rootUrl + 'After/monitor';
-  })
+  //TODO
+  //$('.passcode').on('click', function () {
+  //  location.href = site.rootUrl + 'After/monitor';
+  //})
 }
 
 function updatePasscodeDisplay(okay, passcode) {

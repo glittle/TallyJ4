@@ -1,9 +1,44 @@
 ﻿@page
-@model TallyJ4.Models.NullViewModel
+@using TallyJ4.Models
+@using TallyJ4.Extensions
+@model PublicElectionsModel
 @{
   Layout = "_Layout4Component";
   ViewBag.Component = this;
+
+  ContextItems.AddJavascriptForPage("var _urlTellerJoin={0};".FilledWith((Url.Action("TellerJoin", "Public")).QuotedForJavascript()));
+  ContextItems.AddJavascriptForPage("var _urlOpenElections={0};".FilledWith((Url.Action("OpenElections", "Public")).QuotedForJavascript()));
+  ContextItems.AddJavascriptForPage("var _urlGuestTellerHome={0};".FilledWith((Url.Action("Main", "Home")).QuotedForJavascript()));
+  ContextItems.AddJavascriptForPage("console.log('set');var _publicElections={0};".FilledWith(new PublicElectionLister().RefreshAndGetListOfAvailableElections().SerializedAsJsonString()));
 }
 <script type="text/x-template" id="public-elections">
-  <h1>A list of elections</h1>
+  <div class="public-elections">
+    <ol>
+      <li>
+        <label>
+          Select your election:
+          <b-button size="mini" v-on:click="refreshList">Refresh</b-button>
+        </label>
+        <b-form-select v-model="election"
+                       class="elections"
+                       :options="listing"
+                       :select-size="selectSize">
+        </b-form-select>
+      </li>
+      <li>
+        <label>
+          Type in the access code you were given:
+        </label>
+        <b-form-input v-model="passcode" class="passcode" type="text" maxlength="50"></b-form-input>
+      </li>
+      <li>
+        <label>
+          Join the election:
+        </label>
+        <b-button :disabled="!election || election==='0' || !passcode" variant="primary" v-on:click="joinNow">Join Now</b-button>
+        <span v-html="joinStatus" :class="['joinStatus', joinStatusClass]"></span>
+      </li>
+    </ol>
+
+  </div>
 </script>

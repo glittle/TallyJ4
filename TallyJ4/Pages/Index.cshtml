@@ -8,7 +8,7 @@
   ViewData["Page"] = this;
 }
 
-<div id="vueIndex">
+<div id="vueIndex" v-cloak>
 
   <header>
     <div class="collapse bg-dark" id="navbarHeader">
@@ -107,17 +107,17 @@
 
   </main>
 
-  <b-modal id="modalVoter" title="Log in to Vote">
+  <b-modal id="modalVoter" hide-footer title="Log in to Vote">
     Voter login
   </b-modal>
 
-  <b-modal id="modalGuestTeller" title="Available Elections">
+  <b-modal id="modalGuestTeller" hide-footer title="Available Elections">
     <public-elections></public-elections>
   </b-modal>
 
-  <b-modal id="modalHeadTeller" title="Log in to Manage my Elections">
+  <b-modal id="modalHeadTeller" hide-footer title="Log in to Manage my Elections">
     @Html.Partial("_LoginPartial")
   </b-modal>
 </div>
 
-@Html.Partial("VueComponents/PublicElections", new NullViewModel())
+@Html.Partial("VueComponents/PublicElections", new PublicElectionsModel())

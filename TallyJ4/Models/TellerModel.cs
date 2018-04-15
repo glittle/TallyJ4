@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using TallyJ.Code;
-using TallyJ.Code.Resources;
-using TallyJ.Code.Session;
 using System.Linq;
-using TallyJ.EF;
+using TallyJ4.Code.Session;
+using TallyJ4.Data.Caching;
+using TallyJ4.Extensions;
+using TallyJ4.Data.DbModel;
 
-
-namespace TallyJ.CoreModels
+namespace TallyJ4.Models
 {
   public class TellerModel : DataConnectedModel
   {
-    public JsonResult GrantAccessToGuestTeller(Guid electionGuid, string codeToTry, Guid oldComputerGuid)
+    public object GrantAccessToGuestTeller(Guid electionGuid, string codeToTry, Guid oldComputerGuid)
     {
       var electionModel = new ElectionModel();
 
@@ -22,39 +19,42 @@ namespace TallyJ.CoreModels
       if (passcode == null)
       {
         return new
-                 {
-                   Error = "Sorry, unknown election id"
-                 }.AsJsonResult();
+        {
+          error = "Sorry, unknown election id"
+        }.AsJsonResult();
       }
       if (passcode != codeToTry)
       {
         return new
-                 {
-                   Error = "Sorry, invalid code entered"
-                 }.AsJsonResult();
+        {
+          error = "Sorry, invalid code entered"
+        }.AsJsonResult();
       }
 
       if (!UserSession.IsLoggedIn)
       {
-        var fakeUserName = HttpContext.Current.Session.SessionID.Substring(0, 5) + Guid.NewGuid().ToString().Substring(0, 5);
-        FormsAuthentication.SetAuthCookie(fakeUserName, true);
+        var fakeUserName = Startup.HttpContext.Session.Id.Substring(0, 5) + Guid.NewGuid().ToString().Substring(0, 5);
+        //TODO
+        //FormsAuthentication.SetAuthCookie(fakeUserName, true);
         UserSession.IsGuestTeller = true;
       }
 
       electionModel.JoinIntoElection(electionGuid, oldComputerGuid);
 
       return new
-               {
-                 LoggedIn = true,
-                 CompGuid = UserSession.CurrentComputer.ComputerGuid
-               }.AsJsonResult();
+      {
+        loggedIn = true,
+        compGuid = UserSession.CurrentComputer.ComputerGuid
+      };
     }
 
     public object ChooseTeller(int num, int tellerId, string newName)
     {
       var helper = new TellerHelper();
 
-      var tellerCacher = new TellerCacher(Db);
+      var db = GetNewDbContext();
+
+      var tellerCacher = new TellerCacher(db);
       var computerCacher = new ComputerCacher();
 
       var currentComputer = UserSession.CurrentComputer;
@@ -95,8 +95,8 @@ namespace TallyJ.CoreModels
             Name = newName,
             UsingComputerCode = UserSession.CurrentComputerCode,
           };
-          Db.Teller.Add(teller);
-          Db.SaveChanges();
+          db.Teller.Add(teller);
+          db.SaveChanges();
           tellerCacher.UpdateItemAndSaveCache(teller);
         }
       }
@@ -119,7 +119,7 @@ namespace TallyJ.CoreModels
           currentComputer.Teller2 = teller.Name;
           break;
       }
-      Db.SaveChanges();
+      db.SaveChanges();
       computerCacher.UpdateComputer(currentComputer);
 
       UserSession.SetCurrentTeller(num, teller.Name);
@@ -127,7 +127,7 @@ namespace TallyJ.CoreModels
       return new
       {
         Saved = true,
-        Selected = teller.C_RowId,
+        Selected = teller.Id,
         TellerList = helper.GetTellerOptions(num)
       };
 
@@ -158,7 +158,8 @@ namespace TallyJ.CoreModels
 
     public object DeleteTeller(int tellerId)
     {
-      var thisTeller = new TellerCacher(Db).GetById(tellerId);
+      var db = GetNewDbContext();
+      var thisTeller = new TellerCacher(db).GetById(tellerId);
 
       if (thisTeller == null)
       {
@@ -167,11 +168,11 @@ namespace TallyJ.CoreModels
 
       try
       {
-        Db.Teller.Attach(thisTeller);
-        Db.Teller.Remove(thisTeller);
-        Db.SaveChanges();
+        db.Teller.Attach(thisTeller);
+        db.Teller.Remove(thisTeller);
+        db.SaveChanges();
 
-        new TellerCacher(Db).RemoveItemAndSaveCache(thisTeller);
+        new TellerCacher(db).RemoveItemAndSaveCache(thisTeller);
       }
       catch (Exception ex)
       {

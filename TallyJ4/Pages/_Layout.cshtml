@@ -112,8 +112,7 @@
 
   @Html.Partial("_LayoutFooters")
   @RenderSection("Scripts", required: false)
-  @FileLinking.AddAssociatedJsTag(page)
   @ContextItems.GetJavascriptForPage()
-
+  @FileLinking.AddAssociatedJsTag(page)
 </body>
 </html>

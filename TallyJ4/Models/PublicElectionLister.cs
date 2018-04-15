@@ -3,11 +3,12 @@ using System.Linq;
 using System;
 using TallyJ4.Data.Caching;
 using TallyJ4.Extensions;
+using System.Collections.Generic;
 
 namespace TallyJ4.Models
 {
   public class PublicElectionLister : DataConnectedModel
-    {
+  {
     /// <summary>
     /// Is this election Id in the list of publically visible ids?
     /// </summary>
@@ -32,16 +33,9 @@ namespace TallyJ4.Models
     /// Refresh the list and return it.
     /// </summary>
     /// <returns></returns>
-    public string RefreshAndGetListOfAvailableElections()
+    public List<ListItem> RefreshAndGetListOfAvailableElections()
     {
-      const string template = "<option value=\"{0}\">{1} {2}</option>";
-
       var activeElectionGuids = new ComputerCacher().ElectionGuidsOfActiveComputers;
-
-      if (activeElectionGuids.Count == 0)
-      {
-        return template.FilledWith(0, "(No elections are active right now.)", "");
-      }
 
       var elections = GetNewDbContext().Election
         .Where(e => activeElectionGuids.Contains(e.ElectionGuid)
@@ -51,11 +45,25 @@ namespace TallyJ4.Models
         .Select(e => new { e.Name, e.ElectionGuid, e.Convenor })
         .ToList();
 
+      if (elections.Count == 0)
+      {
+        return new List<ListItem> {
+          {
+            new ListItem { value= "0", text= "(No elections are active right now.)" }
+          }
+        };
+      }
+
       return elections
         .OrderBy(e => e.Name)
-        .Select(e => template.FilledWith(e.ElectionGuid, e.Name, e.Convenor.SurroundContentWith("(", ")")))
-        .JoinedAsString();
+        .Select(e => new ListItem { value = e.ElectionGuid.ToString(), text = e.Name })
+        .ToList();
     }
 
+  }
+  public struct ListItem
+  {
+    public string value { get; set; }
+    public string text { get; set; }
   }
 }

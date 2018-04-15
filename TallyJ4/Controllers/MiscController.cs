@@ -5,7 +5,6 @@ using TallyJ4.Extensions;
 
 namespace TallyJ4.Controllers
 {
-  //[Produces("application/json")]
   [Route("[controller]/[action]")]
   public class MiscController : Controller
   {
